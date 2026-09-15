@@ -1,0 +1,14 @@
+{
+  "name": "Aprobar Evento",
+  "type": "http-request",
+  "method": "PATCH",
+  "url": "http://localhost:5000/api/v1/admin/eventos/{{eventoId}}/estado",
+  "headers": [
+    { "name": "Content-Type", "value": "application/json" },
+    { "name": "Authorization", "value": "Bearer {{adminToken}}" }
+  ],
+  "body": {
+    "type": "json",
+    "content": "{\n  \"nuevoEstado\": \"Aprobado\",\n  \"observaciones\": \"Evento aprobado por admin\"\n  }"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Ver Eventos Pendientes + Historial",
+  "type": "http-request",
+  "method": "GET",
+  "url": "http://localhost:5000/api/v1/admin/eventos/pendientes?page=1&pageSize=10",
+  "headers": [
+    { "name": "Authorization", "value": "Bearer {{adminToken}}" }
+  ]
+}

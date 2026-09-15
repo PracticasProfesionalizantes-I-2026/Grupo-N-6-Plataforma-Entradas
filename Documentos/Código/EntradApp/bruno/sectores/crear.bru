@@ -1,0 +1,14 @@
+{
+  "name": "Crear Sector",
+  "type": "http-request",
+  "method": "POST",
+  "url": "http://localhost:5000/api/v1/eventos/{{eventoId}}/sectores",
+  "headers": [
+    { "name": "Content-Type", "value": "application/json" },
+    { "name": "Authorization", "value": "Bearer {{token}}" }
+  ],
+  "body": {
+    "type": "json",
+    "content": "{\n  \"nombre\": \"VIP\",\n  \"capacidad\": 50,\n  \"precioBase\": 10000\n  }"
+  }
+}

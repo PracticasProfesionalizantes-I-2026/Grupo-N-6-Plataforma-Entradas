@@ -1,0 +1,14 @@
+{
+  "name": "Crear Evento (Proponer)",
+  "type": "http-request",
+  "method": "POST",
+  "url": "http://localhost:5000/api/v1/eventos",
+  "headers": [
+    { "name": "Content-Type", "value": "application/json" },
+    { "name": "Authorization", "value": "Bearer {{token}}" }
+  ],
+  "body": {
+    "type": "json",
+    "content": "{\n  \"nombre\": \"Mi Evento\",\n  \"descripcion\": \"Descripción del evento\",\n  \"fechaInicio\": \"2026-10-15T20:00:00Z\",\n  \"fechaFin\": \"2026-10-15T23:00:00Z\",\n  \"lugar\": \"Estadio Centenario\",\n  \"direccion\": \"Av. Centenario 123\",\n  \"sectores\": [\n    { \"nombre\": \"Platea\", \"capacidad\": 100, \"precioBase\": 5000 },\n    { \"nombre\": \"Popular\", \"capacidad\": 200, \"precioBase\": 3000 }\n  ]\n  }"
+  }
+}

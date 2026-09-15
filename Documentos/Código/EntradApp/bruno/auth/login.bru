@@ -1,0 +1,13 @@
+{
+  "name": "Login",
+  "type": "http-request",
+  "method": "POST",
+  "url": "http://localhost:5000/api/v1/auth/login",
+  "headers": [
+    { "name": "Content-Type", "value": "application/json" }
+  ],
+  "body": {
+    "type": "json",
+    "content": "{\n  \"email\": \"usuario@test.com\",\n  \"password\": \"Usuario123!\"\n  }"
+  }
+}

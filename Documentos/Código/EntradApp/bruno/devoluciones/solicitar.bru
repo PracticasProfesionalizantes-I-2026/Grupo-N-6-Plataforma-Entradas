@@ -1,0 +1,9 @@
+{
+  "name": "Solicitar Devolución",
+  "type": "http-request",
+  "method": "POST",
+  "url": "http://localhost:5000/api/v1/devoluciones/{{entradaId}}",
+  "headers": [
+    { "name": "Authorization", "value": "Bearer {{token}}" }
+  ]
+}

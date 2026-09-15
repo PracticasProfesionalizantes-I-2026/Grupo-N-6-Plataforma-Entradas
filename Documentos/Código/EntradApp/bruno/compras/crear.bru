@@ -1,0 +1,14 @@
+{
+  "name": "Crear Compra",
+  "type": "http-request",
+  "method": "POST",
+  "url": "http://localhost:5000/api/v1/compras",
+  "headers": [
+    { "name": "Content-Type", "value": "application/json" },
+    { "name": "Authorization", "value": "Bearer {{token}}" }
+  ],
+  "body": {
+    "type": "json",
+    "content": "{\n  \"eventoId\": \"{{eventoId}}\",\n  \"sectorId\": \"{{sectorId}}\",\n  \"cantidad\": 2,\n  \"dnis\": [\"12345678\", \"87654321\"]\n  }"
+  }
+}

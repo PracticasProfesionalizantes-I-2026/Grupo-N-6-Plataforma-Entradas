@@ -1,0 +1,9 @@
+{
+  "name": "Confirmar Pago (Efectivo)",
+  "type": "http-request",
+  "method": "PATCH",
+  "url": "http://localhost:5000/api/v1/compras/{{compraId}}/confirmar-pago",
+  "headers": [
+    { "name": "Authorization", "value": "Bearer {{token}}" }
+  ]
+}

@@ -1,0 +1,6 @@
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\BusinessLogic\obj\Debug\net10.0\EntradApp.BusinessLogic.csproj.AssemblyReference.cache
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\BusinessLogic\obj\Debug\net10.0\EntradApp.BusinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\BusinessLogic\obj\Debug\net10.0\EntradApp.BusinessLogic.AssemblyInfoInputs.cache
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\BusinessLogic\obj\Debug\net10.0\EntradApp.BusinessLogic.AssemblyInfo.cs
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\BusinessLogic\obj\Debug\net10.0\EntradApp.BusinessLogic.csproj.CoreCompileInputs.cache
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\BusinessLogic\obj\Debug\net10.0\EntradApp.BusinessLogic.sourcelink.json

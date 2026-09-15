@@ -1,0 +1,13 @@
+{
+  "name": "Registrar Usuario",
+  "type": "http-request",
+  "method": "POST",
+  "url": "http://localhost:5000/api/v1/auth/register",
+  "headers": [
+    { "name": "Content-Type", "value": "application/json" }
+  ],
+  "body": {
+    "type": "json",
+    "content": "{\n  \"email\": \"nuevo@test.com\",\n  \"password\": \"Password123!\",\n  \"nombre\": \"Nuevo\",\n  \"apellido\": \"Usuario\",\n    \"dni\": \"11223344\",\n    \"fechaNacimiento\": \"1990-01-01T00:00:00Z\"\n  }"
+  }
+}

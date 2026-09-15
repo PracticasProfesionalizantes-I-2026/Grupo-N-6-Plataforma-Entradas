@@ -1,0 +1,12 @@
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\obj\Debug\net10.0\EntradApp.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\obj\Debug\net10.0\EntradApp.Shared.AssemblyInfoInputs.cache
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\obj\Debug\net10.0\EntradApp.Shared.AssemblyInfo.cs
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\obj\Debug\net10.0\EntradApp.Shared.csproj.CoreCompileInputs.cache
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\obj\Debug\net10.0\EntradApp.Shared.sourcelink.json
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\bin\Debug\net10.0\EntradApp.Shared.deps.json
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\bin\Debug\net10.0\EntradApp.Shared.dll
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\bin\Debug\net10.0\EntradApp.Shared.pdb
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\obj\Debug\net10.0\EntradApp.Shared.dll
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\obj\Debug\net10.0\refint\EntradApp.Shared.dll
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\obj\Debug\net10.0\EntradApp.Shared.pdb
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\obj\Debug\net10.0\ref\EntradApp.Shared.dll

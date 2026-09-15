@@ -1,0 +1,14 @@
+{
+  "name": "Rechazar Evento",
+  "type": "http-request",
+  "method": "PATCH",
+  "url": "http://localhost:5000/api/v1/admin/eventos/{{eventoId}}/estado",
+  "headers": [
+    { "name": "Content-Type", "value": "application/json" },
+    { "name": "Authorization", "value": "Bearer {{adminToken}}" }
+  ],
+  "body": {
+    "type": "json",
+    "content": "{\n  \"nuevoEstado\": \"Rechazado\",\n  \"observaciones\": \"No cumple con los requisitos\"\n  }"
+  }
+}

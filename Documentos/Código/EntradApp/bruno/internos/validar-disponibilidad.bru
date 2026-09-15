@@ -1,0 +1,14 @@
+{
+  "name": "Validar Disponibilidad",
+  "type": "http-request",
+  "method": "POST",
+  "url": "http://localhost:5000/api/v1/interno/validar/disponibilidad",
+  "headers": [
+    { "name": "Content-Type", "value": "application/json" },
+    { "name": "Authorization", "value": "Bearer {{token}}" }
+  ],
+  "body": {
+    "type": "json",
+    "content": "{\n  \"sectorId\": \"{{sectorId}}\",\n  \"cantidad\": 2\n  }"
+  }
+}
