@@ -19,6 +19,7 @@
 
 ### 1. BREVE DESCRIPCIÓN
 Validación interna que verifica que ningún DNI de la lista ingresada en la compra ya esté registrado para ese mismo evento (ni en la compra actual ni en compras previas).
+**Nota:** El DNI se usa para trazabilidad de compra (RN-01). El **código único alfanumérico** (generado por entrada en CU-10/CU-14) es el usado para validación externa en control de acceso; son campos distintos.
 
 ### 2. PRECONDICIONES
 1. La compra ya pasó validaciones de disponibilidad y límite (CU-26, CU-27).
@@ -55,7 +56,8 @@ Validación interna que verifica que ningún DNI de la lista ingresada en la com
 
 ### 6. POSTCONDICIONES
 1. Resultado de validación retornado al caso de uso llamante.
-2. No hay cambio de estado persistente (solo lectura); el registro de DNIs se hace en CU-10 paso 7.
+2. No hay cambio de estado persistente (solo lectura); el registro de DNIs se hace en CU-10.
+3. El **código único alfanumérico** (campo separado del DNI) se genera por entrada para validación externa en control de acceso (sistema externo).
 
 ---
 
@@ -73,6 +75,7 @@ Validación interna que verifica que ningún DNI de la lista ingresada en la com
 
 - **Validación (Presentación):** N/A (invocación interna). La normalización trim() de DNI podría hacerse aquí.
 - **Verificación (Negocio, → 409):** duplicados en lista actual, existencia en BD para mismo evento (RN-01).
+- **Nota:** DNI ≠ código único alfanumérico. El DNI identifica al comprador (trazabilidad); el código único identifica la entrada física (validación acceso externo).
 
 ### Matriz de trazabilidad CU-28 → Test
 
@@ -84,3 +87,4 @@ Validación interna que verifica que ningún DNI de la lista ingresada en la com
 | 4a. Error técnico | Excepción técnica | `ValidarDnisDuplicados_WhenDbFails_ThrowsException` | `ComprarEntradas_WhenDbFails_Returns500InternalServerError` |
 
 > Regla de oro: cada flujo del caso de uso debe tener al menos un test. Al ser subfunción interna, sus tests son principalmente unitarios; la integración se verifica vía CU-10. Los tests se ejecutan con `dotnet test`.
+

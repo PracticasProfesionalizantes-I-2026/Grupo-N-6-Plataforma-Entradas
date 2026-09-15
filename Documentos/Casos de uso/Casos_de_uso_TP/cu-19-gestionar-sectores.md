@@ -6,11 +6,11 @@
 
 | Campo | Valor |
 | --- | --- |
-| **ID del Caso de Uso** | CU-18 |
+| **ID del Caso de Uso** | CU-19 |
 | **Nombre** | Gestionar sectores |
 | **Actor Principal** | Usuario Registrado (creador del evento) |
 | **Alcance / Nivel** | Sistema; meta de usuario |
-| **Stakeholders e intereses** | Creador → definir sectores, capacidades y precios; Sistema → validar consistencia; Administrador → revisar si evento aprobado |
+| **Stakeholders e intereses** | Creador → definir sectores, capacidades y precios; Sistema → validar consistencia; Super Admin → revisar si evento aprobado |
 | **Disparador (Trigger)** | El usuario creador accede a "Gestionar sectores" de su evento |
 | **Prioridad / Frecuencia** | Media; uso ocasional por evento |
 | **Reglas de negocio relacionadas** | RN-03 (incremento dinámico 20% > 80% ocupación) |
@@ -76,7 +76,7 @@ Permite al creador de un evento agregar, modificar o eliminar sectores (zonas) d
 
 ### 6. POSTCONDICIONES
 1. Sectores creados/actualizados/eliminados en BD.
-2. Si evento estaba "Aprobado", pasa a "Pendiente de aprobación" (requiere revisión admin).
+2. Si evento estaba "Aprobado", pasa a "Pendiente de aprobación" (requiere revisión **Super Admin**).
 3. Precio base definido; RN-03 se aplicará automáticamente si ocupación > 80%.
 
 ---
@@ -101,7 +101,7 @@ Permite al creador de un evento agregar, modificar o eliminar sectores (zonas) d
 - **Validación (Presentación, → 400/401):** JWT válido, formato IDs, formato JSON, capacidad > 0, precio >= 0.
 - **Verificación (Negocio, → 403/404/409):** propiedad del evento, existencia, estado no finalizado, sector sin entradas vendidas para eliminar/reducir, nombre único por evento.
 
-### Matriz de trazabilidad CU-18 → Test
+### Matriz de trazabilidad CU-19 → Test
 
 | Paso del CU | Excepción / Código | Test unitario (BusinessLogic) | Test integración (HTTP) |
 | --- | --- | --- | --- |
@@ -118,3 +118,4 @@ Permite al creador de un evento agregar, modificar o eliminar sectores (zonas) d
 | 5a. Error interno | `500 Internal Server Error` | `GestionarSectores_WhenRepositoryFails_ThrowsException` | `SectorOps_WhenDbFails_Returns500InternalServerError` |
 
 > Regla de oro: cada flujo del caso de uso debe tener al menos un test. Los tests se ejecutan con `dotnet test`.
+

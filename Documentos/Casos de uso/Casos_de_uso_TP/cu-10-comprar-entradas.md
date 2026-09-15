@@ -13,17 +13,18 @@
 | **Stakeholders e intereses** | Usuario Registrado -> adquirir entradas; Sistema -> validar disponibilidad y stock; Evento -> actualizar ocupacion |
 | **Disparador (Trigger)** | El Usuario Registrado selecciona "Comprar entradas" para un evento disponible |
 | **Prioridad / Frecuencia** | Alta; alta frecuencia |
-| **Reglas de negocio relacionadas** | RN-01 (no se permitira registrar DNIs duplicados para un mismo evento); RN-03 (incremento automatico del 20% cuando aforo > 80%) |
+| **Reglas de negocio relacionadas** | RN-01 (no se permitira registrar DNIs duplicados para un mismo evento); RN-02 (pago fisico en efectivo: pendiente=sin abonar, aprobado=entregado, rechazado=nunca pagado); RN-03 (incremento automatico del 20% cuando aforo > 80%) |
 
 ---
 
 ### 1. BREVE DESCRIPCION
-Permite a un Usuario Registrado comprar entradas para un evento disponible, seleccionando sector, cantidad e ingresando DNI por cada entrada.
+Permite a un Usuario Registrado comprar entradas para un evento disponible, seleccionando sector, cantidad, ingresando DNI por cada entrada y completando el pago en efectivo de forma fisica.
 
 ### 2. PRECONDICIONES
 1. El evento se encuentra aprobado y dispone de entradas disponibles.
 2. El actor debe poseer un estado de autenticacion activo (Token JWT valido).
 3. El usuario debe estar registrado en la plataforma.
+4. La compra se inicia en estado "Pendiente de pago" hasta confirmar entrega de efectivo.
 
 ### 3. FLUJO PRINCIPAL (Camino Feliz - HTTP 201)
 1. El Actor envia una peticion al endpoint `GET /api/eventos/{id}/sectores` para ver sectores disponibles.
@@ -86,10 +87,11 @@ Permite a un Usuario Registrado comprar entradas para un evento disponible, sele
 3. En todas las variantes el esquema y resultado (`201 Created` con comprobante) son identicos.
 
 ### 6. POSTCONDICIONES
-1. La compra queda registrada persistentemente en tablas `Compras` y `Entradas`.
-2. Las entradas quedan asociadas a los DNIs ingresados.
+1. La compra queda registrada persistentemente en tablas `Compras` y `Entradas` con estado "Aprobado" (pagado).
+2. Las entradas quedan asociadas a los DNIs ingresados y poseen **codigo unico alfanumerico** para validacion externa.
 3. El stock del sector se actualiza (disminuye segun cantidad comprada).
-4. Se genera comprobante con codigo QR para validacion en ingreso.
+4. Se genera comprobante con codigo QR y codigo unico alfanumerico por entrada para validacion en ingreso.
+5. Si el pago no se completa: compra en estado "Rechazado", reserva liberada, stock repuesto.
 
 ---
 
@@ -102,7 +104,8 @@ Permite a un Usuario Registrado comprar entradas para un evento disponible, sele
 | `201` | Created | Compra registrada exitosamente con comprobante generado. |
 | `400` | Bad Request | JSON invalido, campos faltantes o invalidos en el DTO. |
 | `404` | Not Found | Evento inexistente o no aprobado. |
-| `409` | Conflict | Violacion RN-01 (DNI duplicado), sin stock, limite excedido, reserva expirada. |
+| `409` | Conflict | Violacion RN-01 (DNI duplicado), sin stock, limite excedido, reserva expirada, pago no completado en tiempo. |
+| `200` | OK | Confirmacion de pago en efectivo (compra pasa de Pendiente a Aprobado). |
 | `500` | Internal Server Error | Error tecnico no controlado durante la persistencia. |
 
 ### Nota: Validacion vs. Verificacion aplicada
@@ -122,6 +125,9 @@ Permite a un Usuario Registrado comprar entradas para un evento disponible, sele
 | 5c. Limite excedido | `409 Conflict` | `CreateCompraAsync_WhenLimitExceeded_ThrowsLimiteCompraExcedidoException` | `CreateCompra_WhenLimitExceeded_Returns409Conflict` |
 | 5d. DNI duplicado (RN-01) | `409 Conflict` | `CreateCompraAsync_WhenDniDuplicate_ThrowsDniDuplicadoException` | `CreateCompra_WhenDniDuplicate_Returns409Conflict` |
 | 5e. Reserva expirada | `409 Conflict` | `CreateCompraAsync_WhenReservaExpired_ThrowsReservaExpiradaException` | `CreateCompra_WhenReservaExpired_Returns409Conflict` |
+| 6a. Pago confirmado (efectivo) | `200 OK` | `ConfirmarPagoEfectivoAsync_WithValidCompra_UpdatesToAprobado` | `ConfirmarPago_WithValidCompra_Returns200OK` |
+| 6b. Pago no entregado (timeout) | `409 Conflict` | `ConfirmarPagoEfectivoAsync_WhenTimeout_UpdatesToRechazado` | `ConfirmarPago_WhenTimeout_Returns409Conflict` |
 | 5f. Error persistencia | `500 Internal Server Error` | `CreateCompraAsync_WhenRepositoryThrows_ThrowsException` | `CreateCompra_WhenDatabaseError_Returns500InternalServerError` |
 
 > Regla de oro: cada flujo del caso de uso debe tener al menos un test. Los tests se ejecutan con `dotnet test EntradApp.slnx`.
+

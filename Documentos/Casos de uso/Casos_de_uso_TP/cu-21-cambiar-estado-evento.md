@@ -8,35 +8,35 @@
 | --- | --- |
 | **ID del Caso de Uso** | CU-21 |
 | **Nombre** | Cambiar Estado de Evento |
-| **Actor Principal** | Administrador |
+| **Actor Principal** | **Super Admin** |
 | **Alcance / Nivel** | Sistema; meta de usuario |
-| **Stakeholders e intereses** | Administrador -> aprobar/rechazar; Usuario creador -> notificacion; Usuarios visitantes -> visibilidad |
-| **Disparador (Trigger)** | El Administrador selecciona la opcion para modificar el estado de un evento |
+| **Stakeholders e intereses** | Super Admin -> aprobar/rechazar eventos; Usuario creador -> recibe cambio de estado; Usuarios visitantes -> visibilidad publica |
+| **Disparador (Trigger)** | El **Super Admin** selecciona la opcion para modificar el estado de un evento |
 | **Prioridad / Frecuencia** | Alta; media frecuencia |
-| **Reglas de negocio relacionadas** | Solo un administrador podra aprobar o rechazar eventos; Solo los eventos con estado "Aprobado" seran visibles para los usuarios visitantes y podran habilitar la venta de entradas; Una vez rechazado un evento, no podra publicarse sin una nueva revision administrativa |
+| **Reglas de negocio relacionadas** | Solo el **Super Admin** podra aprobar o rechazar eventos; Solo los eventos con estado "Aprobado" seran visibles para los usuarios visitantes y podran habilitar la venta de entradas; Una vez rechazado un evento, no podra publicarse sin una nueva revision administrativa |
 
 ---
 
 ### 1. BREVE DESCRIPCION
-Permite al administrador revisar un evento y modificar su estado de acuerdo con las reglas de negocio establecidas, habilitando o rechazando su publicacion en la plataforma.
+Permite al **Super Admin** revisar un evento y modificar su estado de acuerdo con las reglas de negocio establecidas, habilitando o rechazando su publicacion en la plataforma.
 
 ### 2. PRECONDICIONES
 1. El evento debe existir en el sistema.
-2. El actor debe tener permisos de administrador (Token JWT con rol "Admin").
+2. El actor debe tener permisos de **Super Admin** (Token JWT con rol "SuperAdmin").
 3. El evento debe encontrarse en un estado que permita la transicion solicitada (ej. "Pendiente de aprobacion" para aprobar/rechazar).
 
 ### 3. FLUJO PRINCIPAL (Camino Feliz - HTTP 200)
-1. El Actor envia una peticion al endpoint `GET /api/admin/eventos/pendientes`.
-2. La **Capa de Presentacion** (`AdminController.GetEventosPendientes`) valida rol administrador.
+1. El **Super Admin** envia una peticion al endpoint `GET /api/admin/eventos/pendientes`.
+2. La **Capa de Presentacion** (`AdminController.GetEventosPendientes`) valida rol **SuperAdmin**.
 3. La **Capa de Negocio** (`AdminService.GetEventosPendientesAsync`) consulta eventos con estado "Pendiente de aprobacion".
-4. El Actor selecciona un evento y envia `PATCH /api/admin/eventos/{id}/estado` con `{nuevoEstado: "Aprobado" | "Rechazado", observaciones?}`.
-5. La **Capa de Presentacion** (`AdminController.UpdateEstadoEvento`) valida esquema y rol.
+4. El **Super Admin** selecciona un evento y envia `PATCH /api/admin/eventos/{id}/estado` con `{nuevoEstado: "Aprobado" | "Rechazado", observaciones?}`.
+5. La **Capa de Presentacion** (`AdminController.UpdateEstadoEvento`) valida esquema y rol **SuperAdmin**.
 6. La **Capa de Negocio** (`AdminService.UpdateEstadoEventoAsync`):
    a. Verifica que el evento exista y este en "Pendiente de aprobacion".
    b. Valida transicion de estado permitida.
    c. Actualiza estado del evento a "Aprobado" o "Rechazado".
    d. Registra auditoria: adminId, fecha, estadoAnterior, estadoNuevo, observaciones.
-   e. Notifica al usuario creador del evento (email/push: "Tu evento fue aprobado/rechazado").
+   e. 
 7. El Sistema devuelve un codigo **200 OK** con el evento actualizado (ID, nombre, nuevoEstado, fechaCambio).
 
 ### 4. FLUJOS ALTERNATIVOS (Caminos Tristes / Excepciones)
@@ -74,7 +74,7 @@ Permite al administrador revisar un evento y modificar su estado de acuerdo con 
 1. El estado del evento queda actualizado segun la decision del administrador.
 2. El cambio queda registrado en auditoria (tabla `EventosEstadosHistorial`).
 3. Eventos aprobados: publicados, visibles para usuarios visitantes, habilitados para venta (CU-10).
-4. Eventos rechazados: permanecen ocultos, no pueden comercializar entradas, requieren nueva revision para publicar.
+4. Eventos rechazados: permanecen ocultos, no pueden comercializar entradas, **no vuelven a Pendiente sin nueva revision administrativa completa**.
 
 ---
 
@@ -91,15 +91,15 @@ Permite al administrador revisar un evento y modificar su estado de acuerdo con 
 
 ### Nota: Validacion vs. Verificacion aplicada
 
-- **Validacion (Presentacion, -> 400):** Esquema JSON del body (`nuevoEstado` requerido, valores permitidos "Aprobado"/"Rechazado"), rol Admin (policy/attribute).
-- **Verificacion (Negocio, -> 404/409/500):** Existencia de evento, estado actual "Pendiente de aprobacion", transicion valida, persistencia. Reglas: solo admin, solo "Aprobado" = visible/vendible, rechazado = oculto sin nueva revision.
+- **Validacion (Presentacion, -> 400):** Esquema JSON del body (`nuevoEstado` requerido, valores permitidos "Aprobado"/"Rechazado"), rol **SuperAdmin** (policy/attribute).
+- **Verificacion (Negocio, -> 404/409/500):** Existencia de evento, estado actual "Pendiente de aprobacion", transicion valida, persistencia. Reglas: solo **Super Admin**, solo "Aprobado" = visible/vendible, rechazado = oculto sin nueva revision (no vuelve a Pendiente).
 
 ### Matriz de trazabilidad CU-21 -> Test
 
 | Paso del CU | Excepcion / Codigo | Test unitario (BusinessLogic) | Test integracion (HTTP) |
 | --- | --- | --- | --- |
-| Flujo principal (Aprobar) | `200 OK` | `UpdateEstadoEventoAsync_WhenApproving_ReturnsEventoAprobado` | `UpdateEstadoEvento_WhenApproving_Returns200OK` |
-| Flujo principal (Rechazar) | `200 OK` | `UpdateEstadoEventoAsync_WhenRejecting_ReturnsEventoRechazado` | `UpdateEstadoEvento_WhenRejecting_Returns200OK` |
+| Flujo principal (Aprobar) | `200 OK` | `UpdateEstadoEventoAsync_WhenSuperAdminApproving_ReturnsEventoAprobado` | `UpdateEstadoEvento_WhenApproving_Returns200OK` |
+| Flujo principal (Rechazar) | `200 OK` | `UpdateEstadoEventoAsync_WhenSuperAdminRejecting_ReturnsEventoRechazado` | `UpdateEstadoEvento_WhenRejecting_Returns200OK` |
 | 3a. Sin eventos pendientes | `200 OK` (lista vacia) | `GetEventosPendientesAsync_WhenNone_ReturnsEmptyList` | `GetEventosPendientes_WhenNone_Returns200EmptyList` |
 | 4a. Evento inexistente | `404 Not Found` | `UpdateEstadoEventoAsync_WhenNotFound_ThrowsEventoNotFoundException` | `UpdateEstadoEvento_WhenNotFound_Returns404NotFound` |
 | 6a. Ya procesado | `409 Conflict` | `UpdateEstadoEventoAsync_WhenAlreadyProcessed_ThrowsEstadoInvalidoException` | `UpdateEstadoEvento_WhenAlreadyProcessed_Returns409Conflict` |
@@ -107,3 +107,4 @@ Permite al administrador revisar un evento y modificar su estado de acuerdo con 
 | 6c. Error persistencia | `500 Internal Server Error` | `UpdateEstadoEventoAsync_WhenRepositoryThrows_ThrowsException` | `UpdateEstadoEvento_WhenDatabaseError_Returns500InternalServerError` |
 
 > Regla de oro: cada flujo del caso de uso debe tener al menos un test. Los tests se ejecutan con `dotnet test EntradApp.slnx`.
+

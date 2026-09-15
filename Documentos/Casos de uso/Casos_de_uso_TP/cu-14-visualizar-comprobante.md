@@ -18,7 +18,7 @@
 ---
 
 ### 1. BREVE DESCRIPCIÓN
-Permite a un usuario registrado visualizar y descargar el comprobante de compra (PDF) de una entrada específica.
+Permite a un usuario registrado visualizar y descargar el comprobante de compra (PDF) de una entrada específica, el cual incluye un **código único alfanumérico** por entrada para validación externa en el acceso al evento.
 
 ### 2. PRECONDICIONES
 1. El usuario debe estar autenticado (Token JWT válido).
@@ -29,8 +29,8 @@ Permite a un usuario registrado visualizar y descargar el comprobante de compra 
 1. El Actor envía una petición al endpoint `GET /api/entradas/{id}/comprobante` con header Authorization.
 2. La **Capa de Presentación** valida el JWT y el formato del ID (GUID).
 3. La **Capa de Negocio** verifica que la entrada pertenezca al usuario y esté en estado válido.
-4. El Sistema genera el comprobante PDF (o recupera si ya generado).
-5. El Sistema devuelve **200 OK** con `Content-Type: application/pdf` y el archivo.
+4. El Sistema genera el comprobante PDF (o recupera si ya generado) que incluye **código QR y código único alfanumérico** por entrada para validación externa.
+5. El Sistema devuelve **200 OK** con `Content-Type: application/pdf` y el archivo que contiene el código único alfanumérico para validación en control de acceso externo.
 
 ### 4. FLUJOS ALTERNATIVOS (Caminos Tristes / Excepciones)
 
@@ -65,8 +65,9 @@ Permite a un usuario registrado visualizar y descargar el comprobante de compra 
 2. Comprobante fiscal vs. ticket simple (según configuración).
 
 ### 6. POSTCONDICIONES
-1. Comprobante PDF entregado al usuario.
-2. No hay cambio de estado persistente (operación de solo lectura/generación).
+1. Comprobante PDF entregado al usuario con **código único alfanumérico** por entrada.
+2. El código único permite validación externa en aplicación de control de acceso (fuera de este sistema).
+3. No hay cambio de estado persistente (operación de solo lectura/generación).
 
 ---
 
@@ -76,7 +77,7 @@ Permite a un usuario registrado visualizar y descargar el comprobante de compra 
 
 | Código HTTP | Nombre Técnico | Contexto de Aplicación en el Caso de Uso |
 | --- | --- | --- |
-| `200` | OK | Comprobante PDF retornado correctamente. |
+| `200` | OK | Comprobante PDF con código único alfanumérico retornado correctamente. |
 | `400` | Bad Request | ID con formato inválido. |
 | `401` | Unauthorized | Token JWT inválido, expirado o ausente. |
 | `403` | Forbidden | Entrada pertenece a otro usuario. |
@@ -93,7 +94,7 @@ Permite a un usuario registrado visualizar y descargar el comprobante de compra 
 
 | Paso del CU | Excepción / Código | Test unitario (BusinessLogic) | Test integración (HTTP) |
 | --- | --- | --- | --- |
-| Flujo principal | `200 OK` | `VisualizarComprobante_WithValidEntrada_ReturnsPdf` | `GetComprobante_WithValidEntrada_Returns200Pdf` |
+| Flujo principal | `200 OK` | `VisualizarComprobante_WithValidEntrada_ReturnsPdfWithAlfanumericCode` | `GetComprobante_WithValidEntrada_Returns200PdfWithCode` |
 | 1a. Token inválido | `401 Unauthorized` | — | `GetComprobante_WithInvalidToken_Returns401Unauthorized` |
 | 2a. ID inválido | `400 Bad Request` | — | `GetComprobante_WithInvalidId_Returns400BadRequest` |
 | 3a. Entrada no encontrada | `404 Not Found` | `VisualizarComprobante_WhenNotExists_ThrowsNotFoundException` | `GetComprobante_WhenNotExists_Returns404NotFound` |
@@ -102,3 +103,4 @@ Permite a un usuario registrado visualizar y descargar el comprobante de compra 
 | 4a. Error PDF | `500 Internal Server Error` | `VisualizarComprobante_WhenPdfFails_ThrowsException` | `GetComprobante_WhenPdfFails_Returns500InternalServerError` |
 
 > Regla de oro: cada flujo del caso de uso debe tener al menos un test. Los tests se ejecutan con `dotnet test`.
+

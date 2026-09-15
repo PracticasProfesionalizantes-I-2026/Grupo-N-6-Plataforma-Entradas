@@ -1,4 +1,4 @@
-# Documentación de Proyecto de Software
+﻿# Documentación de Proyecto de Software
 
 **Nombre del proyecto:** EntradApp
 
@@ -71,9 +71,9 @@ Se descartan soluciones existentes del mercado debido a que no contemplan requer
 |-------------|------------------------------|-----------|------------------------------|----------------|
 | Organizador del evento | Maximizar ventas y controlar el aforo sin errores. | Muy interesado, enfocado en resultados y control. | Gestión de eventos, reportes de ventas, control de stock. | Necesita alta confiabilidad, no tolera sobreventa ni fallos. |
 | Usuarios compradores | Comprar entradas de forma rápida, segura y transparente. | Alta expectativa de inmediatez y facilidad de uso. | Compra de entradas, selección de sector, carga de datos. | Debe ser simple y rápido. |
-| Administrador | Garantizar la calidad y legitimidad de los eventos publicados. | Responsable, requiere claridad y control. | Gestión de eventos. | Necesita una interfaz clara y datos consistentes. |
-| Sistema externo de pagos | Procesar pagos de forma segura y confiable. | Enfocado en seguridad y validación de transacciones. | Procesar pagos, validación de operaciones. | Cumplimiento de normas de tiempos de respuesta. |
-| Personal de control de acceso | Validar entradas de forma rápida y sin errores. | Necesita rapidez y confiabilidad. | Escaneo y validación de entradas. | El sistema debe ser ágil y funcionar incluso con alta concurrencia. |
+| Super Admin | Garantizar la calidad y legitimidad de los eventos publicados, gestionar visibilidad mediante aprobación/rechazo. | Responsable, requiere claridad y control. | Gestión de estados de eventos (aprobar/rechazar), visibilidad pública. | Necesita una interfaz clara y datos consistentes. |
+
+
 
 ---
 
@@ -97,7 +97,7 @@ En esta primera versión del sistema **NO** se incluirá:
 - Implementación de modelos de machine learning o validaciones automatizadas avanzadas sobre identidad.
 - Sistema de notificaciones (email, SMS u otros).
 - Integración con sistemas externos de pago; el proceso se limitará a pagos en efectivo.
-- Gestión de administradores globales de la plataforma. Todos los usuarios registrados podrán gestionar sus propios eventos y consultar la información asociada a ellos.
+- Existe un **Super Admin** que gestiona la visibilidad de los eventos mediante aprobación/rechazo. Los usuarios registrados proponen eventos y gestionan sus propios eventos.
 
 ---
 
@@ -109,29 +109,46 @@ En esta primera versión del sistema **NO** se incluirá:
 |--------|--------------|
 | RF-01 | El sistema debe permitir crear un nuevo evento con estado inicial "Pendiente de aprobación", indicando nombre, fecha, ubicación, sectores disponibles, capacidad máxima y precio base por sector. |
 | RF-02 | El sistema debe permitir consultar la disponibilidad de entradas por evento y sector en tiempo real. |
-| RF-03 | El sistema debe permitir a un usuario solicitar la compra de entre 1 y 4 entradas por transacción. |
+| RF-03 | El sistema debe permitir a un usuario solicitar la compra de hasta 4 entradas por evento (límite acumulado por usuario por evento). |
 | RF-04 | El sistema debe rechazar la solicitud de compra cuando la cantidad solicitada supere el cupo remanente del sector. |
-| RF-05 | El sistema debe bloquear temporalmente el stock solicitado en el carrito durante 15 minutos antes de liberarlo automáticamente. |
+| RF-05 | El sistema debe bloquear temporalmente el stock solicitado en el carrito durante 10 minutos antes de liberarlo automáticamente. |
 | RF-06 | El sistema debe requerir la carga de un DNI por cada entrada solicitada. |
 | RF-07 | El sistema debe validar que no existan DNIs duplicados para el mismo evento, rechazando la operación en caso de repetición. |
 | RF-08 | El sistema debe registrar cada transacción realizada, almacenando usuario, evento, sector, cantidad de entradas y DNIs asociados. |
-| RF-09 | El sistema debe permitir procesar devoluciones de entradas en eventos agotados, aplicando un reembolso del 80% y reponiendo automáticamente el stock disponible. |
+| RF-09 | El sistema debe permitir procesar devoluciones de entradas en eventos agotados o con entradas activas, aplicando un reembolso del 80% y reponiendo automáticamente el stock disponible. |
 | RF-10 | El sistema debe incrementar automáticamente en 20% el precio base de un sector cuando el aforo vendido supere el 80% de su capacidad. |
-| RF-11 | El sistema debe validar el estado del pago antes de confirmar la compra de entradas. |
-| RF-12 | El sistema debe cancelar la reserva de entradas si el pago no se completa dentro del tiempo establecido. |
-| RF-13 | El sistema debe registrar el resultado de cada transacción de pago (aprobado, rechazado o pendiente). |
-| RF-14 | El sistema debe generar un comprobante de compra una vez confirmado el pago. |
-| RF-15 | El sistema debe permitir validar entradas mediante un código único asociado a cada ticket. |
-| RF-16 | El sistema debe impedir el uso de una entrada que ya haya sido validada previamente. |
-| RF-17 | El sistema debe registrar la fecha y hora de validación de cada entrada. |
-| RF-18 | El sistema debe permitir generar reportes estadísticos de ventas por evento y sector, mostrando la cantidad de entradas vendidas, disponibles y el porcentaje de ocupación. |
-| RF-19 | El sistema debe permitir consultar reportes históricos de eventos, incluyendo ingresos generados, cantidad de entradas vendidas y nivel de ocupación alcanzado. |
-| RF-20 | El sistema debe permitir a un administrador visualizar los eventos pendientes de aprobación. |
-| RF-21 | El administrador debe poder aprobar un evento para que sea publicado en la plataforma. |
-| RF-22 | El administrador debe poder rechazar un evento indicando el motivo del rechazo. |
-| RF-23 | El sistema debe impedir la visualización pública de eventos que no hayan sido aprobados. |
 
-> **Nota:** Se corrigió la numeración duplicada del RF-16 original (había dos requerimientos con ese código); a partir de allí se renumeraron correlativamente hasta RF-23.
+
+
+
+| RF-11 | El sistema debe permitir validar entradas mediante un código único asociado a cada ticket. |
+| RF-12 | El sistema debe impedir el uso de una entrada que ya haya sido validada previamente. |
+| RF-13 | El sistema debe registrar la fecha y hora de validación de cada entrada. |
+| RF-14 | El sistema debe permitir generar reportes estadísticos de ventas por evento y sector, mostrando la cantidad de entradas vendidas, disponibles y el porcentaje de ocupación. |
+| RF-15 | El sistema debe permitir consultar reportes históricos de eventos, incluyendo ingresos generados, cantidad de entradas vendidas y nivel de ocupación alcanzado. |
+| RF-16 | El sistema debe permitir a un administrador visualizar los eventos pendientes de aprobación. |
+| RF-17 | El administrador debe poder aprobar un evento para que sea publicado en la plataforma. |
+| RF-18 | El administrador debe poder rechazar un evento indicando el motivo del rechazo. |
+| RF-19 | El sistema debe impedir la visualización pública de eventos que no hayan sido aprobados. |
+
+**Nota:** Se eliminaron RF-11 a RF-14 (pagos) por estar fuera de alcance MVP; RF-15 a RF-23 renumerados a RF-11 a RF-19.
+
+
+---
+
+### 5.3 Transiciones de Estado de Eventos
+
+| Estado Origen | Estado Destino | Actor | Descripción |
+|---------------|----------------|-------|-------------|
+| Borrador | Pendiente de aprobación | Usuario Registrado (creador) | Envía evento para revisión |
+| Pendiente de aprobación | Aprobado | Super Admin | Evento publicado, visible públicamente, habilita venta |
+| Pendiente de aprobación | Rechazado | Super Admin | Evento oculto, no habilita venta, requiere motivo |
+| Aprobado | Cancelado | Super Admin / Creador | Evento cancelado, no visible, entradas devueltas si aplica |
+| Aprobado | Finalizado | Sistema | Evento finalizado automáticamente tras fecha |
+| Rechazado | *No vuelve a Pendiente* | — | **Regla:** Una vez rechazado, no puede volver a Pendiente sin nueva revisión administrativa completa |
+| Cualquiera | Borrado (baja lógica) | Super Admin | Borrado lógico, mantiene historial para auditoría |
+
+> **Regla:** Los eventos con estado **Rechazado** no pueden transicionar a **Pendiente de aprobación** directamente. Requieren una nueva creación o revisión administrativa completa.
 
 ### 5.2 Requerimientos No Funcionales
 
@@ -149,3 +166,9 @@ En esta primera versión del sistema **NO** se incluirá:
 | RNF-10 | Integridad de datos | El sistema debe garantizar la consistencia de la información en todas las operaciones, especialmente en la gestión de stock y transacciones. |
 | RNF-11 | Rendimiento | El sistema debe validar entradas en un tiempo menor a 300 ms para garantizar fluidez en accesos masivos. |
 | RNF-12 | Disponibilidad | El sistema debe garantizar alta disponibilidad durante eventos, especialmente en procesos de validación de entradas. |
+
+
+
+
+
+

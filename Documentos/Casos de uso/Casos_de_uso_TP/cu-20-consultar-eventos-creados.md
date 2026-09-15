@@ -6,7 +6,7 @@
 
 | Campo | Valor |
 | --- | --- |
-| **ID del Caso de Uso** | CU-19 |
+| **ID del Caso de Uso** | CU-20 |
 | **Nombre** | Consultar eventos creados |
 | **Actor Principal** | Usuario Registrado (creador) |
 | **Alcance / Nivel** | Sistema; meta de usuario |
@@ -77,7 +77,7 @@ Permite a un usuario registrado consultar el listado paginado de todos los event
 - **Validación (Presentación, → 400/401):** JWT válido, formato parámetros paginación/filtro.
 - **Verificación (Negocio):** filtro por propietario (usuario autenticado).
 
-### Matriz de trazabilidad CU-19 → Test
+### Matriz de trazabilidad CU-20 → Test
 
 | Paso del CU | Excepción / Código | Test unitario (BusinessLogic) | Test integración (HTTP) |
 | --- | --- | --- | --- |
@@ -88,3 +88,4 @@ Permite a un usuario registrado consultar el listado paginado de todos los event
 | 4a. Error interno | `500 Internal Server Error` | `ConsultarEventosCreados_WhenRepositoryFails_ThrowsException` | `GetMisEventos_WhenDbFails_Returns500InternalServerError` |
 
 > Regla de oro: cada flujo del caso de uso debe tener al menos un test. Los tests se ejecutan con `dotnet test`.
+

@@ -18,12 +18,13 @@
 ---
 
 ### 1. BREVE DESCRIPCION
-Permite a un Usuario Registrado solicitar la devolucion de una entrada adquirida, recibiendo un reembolso del 80% y liberando la entrada al stock.
+Permite a un Usuario Registrado solicitar la devolucion de una entrada adquirida (tanto en eventos agotados como con entradas activas), recibiendo un reembolso del 80% y liberando la entrada al stock.
 
 ### 2. PRECONDICIONES
-1. El Usuario Registrado posee una entrada activa para el evento.
+1. El Usuario Registrado posee una entrada activa para el evento (evento agotado o con entradas disponibles).
 2. El actor debe poseer un estado de autenticacion activo (Token JWT valido).
 3. La entrada debe estar en estado "Activa" (no utilizada, no devuelta, no vencida).
+4. El evento no debe haber iniciado (fecha inicio futura).
 
 ### 3. FLUJO PRINCIPAL (Camino Feliz - HTTP 200)
 1. El Actor envia una peticion al endpoint `GET /api/mis-entradas` para listar sus entradas activas.
@@ -31,7 +32,7 @@ Permite a un Usuario Registrado solicitar la devolucion de una entrada adquirida
 3. El Actor envia una peticion al endpoint `POST /api/devoluciones/{idEntrada}`.
 4. La **Capa de Presentacion** (`DevolucionesController.CreateDevolucion`) valida que la entrada exista y pertenezca al usuario.
 5. La **Capa de Negocio** (`DevolucionService.CreateDevolucionAsync`):
-   a. Verifica que la entrada sea elegible para devolucion (estado activa, evento no iniciado).
+   a. Verifica que la entrada sea elegible para devolucion (estado activa, evento no iniciado, dentro de plazo configurado).
    b. Registra la devolucion en estado "Solicitada".
    c. Aplica reembolso del 80% del valor pagado (RN-02).
    d. Repone la entrada al stock disponible del sector (RN-02).
@@ -100,3 +101,4 @@ Permite a un Usuario Registrado solicitar la devolucion de una entrada adquirida
 | 5c. Error stock | `500 Internal Server Error` | `CreateDevolucionAsync_WhenStockUpdateFails_ThrowsException` | `CreateDevolucion_WhenStockError_Returns500InternalServerError` |
 
 > Regla de oro: cada flujo del caso de uso debe tener al menos un test. Los tests se ejecutan con `dotnet test EntradApp.slnx`.
+

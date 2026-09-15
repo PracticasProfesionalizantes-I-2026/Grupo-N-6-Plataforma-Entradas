@@ -18,25 +18,25 @@
 ---
 
 ### 1. BREVE DESCRIPCIÓN
-Validación interna que verifica si el usuario ya alcanzó el límite máximo de entradas permitidas para el evento (ej. máx. 6 entradas por usuario por evento).
+Validación interna que verifica si el usuario ya alcanzó el límite máximo de **4 entradas por usuario por evento** (acumulado: activas + utilizadas).
 
 ### 2. PRECONDICIONES
 1. El usuario debe estar identificado (userId).
 2. El evento debe existir y estar "Aprobado".
-3. Debe existir configuración de límite máximo (parámetro del sistema o del evento).
+3. Límite máximo fijo: **4 entradas por usuario por evento** (acumulado).
 
 ### 3. FLUJO PRINCIPAL (Camino Feliz - HTTP 200 interno)
 1. El Sistema (Capa de Negocio) recibe parámetros: userId, eventoId, cantidadNueva.
 2. La **Capa de Negocio** consulta cuántas entradas "Activas" + "Utilizadas" tiene el usuario para ese evento.
 3. Suma cantidadNueva + entradasExistentes.
-4. Si total <= límiteMáximo, validación exitosa.
+4. Si total <= **4**, validación exitosa.
 5. El Sistema retorna resultado positivo al flujo llamante (CU-10).
 
 ### 4. FLUJOS ALTERNATIVOS (Caminos Tristes / Excepciones)
 
 * **2a. Límite excedido (Excepción de dominio):**
   1. Si en el Paso 4 total > límiteMáximo.
-  2. La **Capa de Negocio** lanza `LimiteMaximoExcedidoException` con (límite, actuales, solicitadas).
+  2. La **Capa de Negocio** lanza `LimiteMaximoExcedidoException` con (límite=4, actuales, solicitadas).
   3. El flujo llamante (CU-10) maneja y retorna **409 Conflict** al usuario.
 
 * **3a. Error técnico (Excepción no controlada):**
@@ -45,8 +45,8 @@ Validación interna que verifica si el usuario ya alcanzó el límite máximo de
   3. El flujo llamante retorna **500 Internal Server Error**.
 
 ### 5. SUB-VARIACIONES (opcional)
-1. Límite configurable por evento vs. global del sistema.
-2. Límite por sector vs. global por evento.
+1. Límite fijo: **4 entradas por usuario por evento** (acumulado activas + utilizadas).
+2. Límite global por evento (no por sector).
 
 ### 6. POSTCONDICIONES
 1. Resultado de validación retornado al caso de uso llamante.
@@ -73,8 +73,9 @@ Validación interna que verifica si el usuario ya alcanzó el límite máximo de
 
 | Paso del CU | Excepción / Código | Test unitario (BusinessLogic) | Test integración (HTTP) |
 | --- | --- | --- | --- |
-| Flujo principal | Éxito (interno) | `ValidarLimiteMaximo_WithinLimit_ReturnsTrue` | (probado vía CU-10 integración) |
-| 2a. Límite excedido | `LimiteMaximoExcedidoException` | `ValidarLimiteMaximo_WhenExceeded_ThrowsException` | `ComprarEntradas_WhenLimitExceeded_Returns409Conflict` |
+| Flujo principal | Éxito (interno) | `ValidarLimiteMaximo_WithinLimit4_ReturnsTrue` | (probado vía CU-10 integración) |
+| 2a. Límite excedido | `LimiteMaximoExcedidoException` | `ValidarLimiteMaximo_WhenExceeds4_ThrowsException` | `ComprarEntradas_WhenLimitExceeded_Returns409Conflict` |
 | 3a. Error técnico | Excepción técnica | `ValidarLimiteMaximo_WhenDbFails_ThrowsException` | `ComprarEntradas_WhenDbFails_Returns500InternalServerError` |
 
 > Regla de oro: cada flujo del caso de uso debe tener al menos un test. Al ser subfunción interna, sus tests son principalmente unitarios; la integración se verifica vía CU-10. Los tests se ejecutan con `dotnet test`.
+

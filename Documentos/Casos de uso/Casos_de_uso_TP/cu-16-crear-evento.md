@@ -10,15 +10,15 @@
 | **Nombre** | Crear Evento |
 | **Actor Principal** | Usuario Registrado |
 | **Alcance / Nivel** | Sistema; meta de usuario |
-| **Stakeholders e intereses** | Usuario Registrado -> crear evento; Administrador -> revisar y aprobar; Sistema -> validar y almacenar |
+| **Stakeholders e intereses** | Usuario Registrado -> crear evento; Super Admin -> revisar y aprobar; Sistema -> validar y almacenar |
 | **Disparador (Trigger)** | El usuario registrado selecciona "Crear Evento" desde la plataforma |
 | **Prioridad / Frecuencia** | Media; media frecuencia |
-| **Reglas de negocio relacionadas** | Todo evento registrado quedara con estado "Pendiente de aprobacion" hasta ser revisado por un administrador; Solo los eventos con estado "Aprobado" podran ser visibles para los usuarios visitantes y estar disponibles para la venta de entradas |
+| **Reglas de negocio relacionadas** | Todo evento registrado quedara con estado "Pendiente de aprobacion" hasta ser revisado por el **Super Admin**; Solo los eventos con estado "Aprobado" podran ser visibles para los usuarios visitantes y estar disponibles para la venta de entradas |
 
 ---
 
 ### 1. BREVE DESCRIPCION
-Permite a un usuario registrado crear un evento ingresando la informacion requerida para su posterior revision y aprobacion.
+Permite a un usuario registrado **proponer** un evento ingresando la informacion requerida para su posterior revision y aprobacion por el **Super Admin**.
 
 ### 2. PRECONDICIONES
 1. El usuario inicio sesion en la plataforma (Token JWT valido).
@@ -83,7 +83,7 @@ Permite a un usuario registrado crear un evento ingresando la informacion requer
 2. El evento queda asociado al usuario que lo creo (FK `UsuarioId`).
 3. El evento se almacena con estado "Pendiente de aprobacion".
 4. Los sectores quedan registrados en tabla `Sectores` vinculados al evento.
-5. El evento queda disponible para revision por parte de un administrador (CU-21).
+5. El evento queda disponible para revision por parte del **Super Admin** (CU-21 (Super Admin)).
 
 ---
 
@@ -115,3 +115,4 @@ Permite a un usuario registrado crear un evento ingresando la informacion requer
 | 4e. Error persistencia | `500 Internal Server Error` | `CreateEventoAsync_WhenRepositoryThrows_ThrowsException` | `CreateEvento_WhenDatabaseError_Returns500InternalServerError` |
 
 > Regla de oro: cada flujo del caso de uso debe tener al menos un test. Los tests se ejecutan con `dotnet test EntradApp.slnx`.
+
