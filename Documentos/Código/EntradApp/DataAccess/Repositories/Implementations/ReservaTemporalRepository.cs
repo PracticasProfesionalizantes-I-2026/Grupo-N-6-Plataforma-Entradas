@@ -13,10 +13,12 @@ public class ReservaTemporalRepository : IReservaTemporalRepository
 
     public async Task<ReservaTemporal?> GetByCompraIdAsync(Guid compraId, CancellationToken ct = default)
         => await _context.ReservasTemporales
+            .AsNoTracking()
             .FirstOrDefaultAsync(r => r.CompraId == compraId, ct);
 
     public async Task<List<ReservaTemporal>> GetExpiradasAsync(CancellationToken ct = default)
         => await _context.ReservasTemporales
+            .AsNoTracking()
             .Where(r => !r.Expirada && r.ExpiraEn <= DateTime.UtcNow)
             .ToListAsync(ct);
 

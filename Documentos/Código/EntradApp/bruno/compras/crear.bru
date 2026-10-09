@@ -9,6 +9,9 @@
   ],
   "body": {
     "type": "json",
-    "content": "{\n  \"eventoId\": \"{{eventoId}}\",\n  \"sectorId\": \"{{sectorId}}\",\n  \"cantidad\": 2,\n  \"dnis\": [\"12345678\", \"87654321\"]\n  }"
+    "content": "{\n  \"eventoId\": \"{{eventoId}}\",\n  \"sectorId\": \"{{sectorId}}\",\n  \"cantidad\": 2,\n  \"dnis\": [\"12345678\", \"87654321\"]\n}"
+  },
+  "scripts": {
+    "post-response": "if (res.status === 201) { bruno.setVar('compraId', res.body.id); bruno.setVar('entradaId', res.body.entradas[0].id); }"
   }
 }

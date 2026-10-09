@@ -1,4 +1,5 @@
 using EntradApp.BusinessLogic.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 

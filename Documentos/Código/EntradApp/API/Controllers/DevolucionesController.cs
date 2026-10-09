@@ -1,4 +1,5 @@
 using EntradApp.BusinessLogic.Interfaces;
+using EntradApp.Shared.Common;
 using EntradApp.Shared.DTOs.Devolucion;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,5 +32,14 @@ public class DevolucionesController : ControllerBase
         var usuarioId = Guid.Parse(User.FindFirst("sub")!.Value);
         var result = await _devolucionService.GetMisDevolucionesAsync(usuarioId, page, pageSize);
         return Ok(result);
+    }
+
+    [HttpPut("{devolucionId}/completar")]
+    [Authorize(Policy = "SuperAdmin")]
+    public async Task<ActionResult<DevolucionResponseDTO>> CompletarDevolucion(Guid devolucionId)
+    {
+        var result = await _devolucionService.CompletarDevolucionAsync(devolucionId);
+        if (!result.IsSuccess) return BadRequest(new { error = result.Error });
+        return Ok(result.Value);
     }
 }

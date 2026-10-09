@@ -13,10 +13,10 @@ public class GlobalExceptionFilter : IExceptionFilter
         {
             NotFoundException => StatusCodes.Status404NotFound,
             ValidationException => StatusCodes.Status400BadRequest,
+            ConcurrencyException => StatusCodes.Status409Conflict,
             ConflictException => StatusCodes.Status409Conflict,
             UnauthorizedException => StatusCodes.Status401Unauthorized,
             ForbiddenException => StatusCodes.Status403Forbidden,
-            ConcurrencyException => StatusCodes.Status409Conflict,
             _ => StatusCodes.Status500InternalServerError
         };
 

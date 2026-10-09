@@ -1,0 +1,9 @@
+{
+  "name": "Estadísticas del Evento (CSV Export)",
+  "type": "http-request",
+  "method": "GET",
+  "url": "http://localhost:5000/api/v1/reportes/eventos/{{eventoId}}/estadisticas?format=csv",
+  "headers": [
+    { "name": "Authorization", "value": "Bearer {{token}}" }
+  ]
+}

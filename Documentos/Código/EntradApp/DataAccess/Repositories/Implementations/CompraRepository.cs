@@ -14,6 +14,7 @@ public class CompraRepository : ICompraRepository
 
     public async Task<Compra?> GetByIdAsync(Guid id, CancellationToken ct = default)
         => await _context.Compras
+            .AsNoTracking()
             .Include(c => c.Entradas.Where(e => !e.EsBorrado))
             .Include(c => c.Sector)
             .Include(c => c.Evento)
@@ -22,8 +23,40 @@ public class CompraRepository : ICompraRepository
     public async Task<PagedResult<Compra>> GetByUsuarioAsync(Guid usuarioId, int page, int pageSize, CancellationToken ct = default)
     {
         var query = _context.Compras
+            .AsNoTracking()
             .Where(c => c.UsuarioId == usuarioId)
             .OrderByDescending(c => c.FechaCreacion);
+
+        var total = await query.CountAsync(ct);
+        var items = await query
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Include(c => c.Entradas.Where(e => !e.EsBorrado))
+            .Include(c => c.Sector)
+            .Include(c => c.Evento)
+            .ToListAsync(ct);
+
+        return new PagedResult<Compra>(items, page, pageSize, total);
+    }
+
+    public async Task<PagedResult<Compra>> GetByEventoAsync(Guid eventoId, DateTime? fechaDesde, DateTime? fechaHasta, string? estado, int page, int pageSize, CancellationToken ct = default)
+    {
+        var query = _context.Compras
+            .AsNoTracking()
+            .Where(c => c.EventoId == eventoId)
+            .OrderByDescending(c => c.FechaCreacion);
+
+        if (fechaDesde.HasValue)
+            query = query.Where(c => c.FechaCreacion >= fechaDesde.Value);
+
+        if (fechaHasta.HasValue)
+            query = query.Where(c => c.FechaCreacion <= fechaHasta.Value);
+
+        if (!string.IsNullOrWhiteSpace(estado))
+        {
+            if (Enum.TryParse<EstadoCompra>(estado, true, out var estadoCompra))
+                query = query.Where(c => c.Estado == estadoCompra);
+        }
 
         var total = await query.CountAsync(ct);
         var items = await query

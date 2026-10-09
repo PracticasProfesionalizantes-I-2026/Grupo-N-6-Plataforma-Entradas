@@ -1,0 +1,14 @@
+{
+  "name": "Validar Límite de Compra",
+  "type": "http-request",
+  "method": "POST",
+  "url": "http://localhost:5000/api/v1/interno/validar/limite",
+  "headers": [
+    { "name": "Content-Type", "value": "application/json" },
+    { "name": "Authorization", "value": "Bearer {{token}}" }
+  ],
+  "body": {
+    "type": "json",
+    "content": "{\n  \"usuarioId\": \"{{usuarioId}}\",\n  \"eventoId\": \"{{eventoId}}\",\n  \"cantidad\": 2\n}"
+  }
+}

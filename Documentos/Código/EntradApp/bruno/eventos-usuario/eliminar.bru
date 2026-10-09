@@ -1,0 +1,9 @@
+{
+  "name": "Eliminar Evento (Soft Delete)",
+  "type": "http-request",
+  "method": "DELETE",
+  "url": "http://localhost:5000/api/v1/eventos/{{eventoId}}",
+  "headers": [
+    { "name": "Authorization", "value": "Bearer {{token}}" }
+  ]
+}

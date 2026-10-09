@@ -1,5 +1,5 @@
 {
-  "name": "Crear Evento (Proponer)",
+  "name": "Crear Evento",
   "type": "http-request",
   "method": "POST",
   "url": "http://localhost:5000/api/v1/eventos",
@@ -9,6 +9,9 @@
   ],
   "body": {
     "type": "json",
-    "content": "{\n  \"nombre\": \"Mi Evento\",\n  \"descripcion\": \"Descripción del evento\",\n  \"fechaInicio\": \"2026-10-15T20:00:00Z\",\n  \"fechaFin\": \"2026-10-15T23:00:00Z\",\n  \"lugar\": \"Estadio Centenario\",\n  \"direccion\": \"Av. Centenario 123\",\n  \"sectores\": [\n    { \"nombre\": \"Platea\", \"capacidad\": 100, \"precioBase\": 5000 },\n    { \"nombre\": \"Popular\", \"capacidad\": 200, \"precioBase\": 3000 }\n  ]\n  }"
+    "content": "{\n  \"nombre\": \"Concierto Rock 2026\",\n  \"descripcion\": \"Gran concierto de rock\",\n  \"fechaInicio\": \"2026-12-15T20:00:00\",\n  \"fechaFin\": \"2026-12-15T23:00:00\",\n  \"lugar\": \"Estadio Central\",\n  \"direccion\": \"Av. Principal 123\",\n  \"sectores\": [\n    { \"nombre\": \"Platea\", \"capacidad\": 100, \"precioBase\": 15000 },\n    { \"nombre\": \"Popular\", \"capacidad\": 200, \"precioBase\": 8000 }\n  ]\n}"
+  },
+  "scripts": {
+    "post-response": "if (res.status === 201) { bruno.setVar('eventoId', res.body.id); }"
   }
 }

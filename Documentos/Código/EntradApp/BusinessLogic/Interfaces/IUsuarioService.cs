@@ -11,5 +11,5 @@ public interface IUsuarioService
     Task<Result<UsuarioResponseDTO>> GetByEmailAsync(string email);
     Task<Result> ActualizarDatosPersonalesAsync(Guid id, UsuarioUpdateDTO dto);
     Task<Result> ActualizarPasswordAsync(Guid id, string passwordActual, string passwordNueva);
-    Task<Result> LoginAsync(string email, string password);
+    Task<Result<LoginResponseDTO>> LoginAsync(string email, string password);
 }

@@ -1,4 +1,5 @@
 using EntradApp.BusinessLogic.Interfaces;
+using EntradApp.Shared.Common;
 using EntradApp.Shared.DTOs.Compra;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

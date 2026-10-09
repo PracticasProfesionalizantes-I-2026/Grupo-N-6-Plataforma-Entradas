@@ -14,12 +14,14 @@ public class EntradaRepository : IEntradaRepository
 
     public async Task<Entrada?> GetByIdAsync(Guid id, CancellationToken ct = default)
         => await _context.Entradas
+            .AsNoTracking()
             .Include(e => e.Compra)
             .Include(e => e.Sector)
             .FirstOrDefaultAsync(e => e.Id == id, ct);
 
     public async Task<Entrada?> GetByCodigoUnicoAsync(string codigoUnico, CancellationToken ct = default)
         => await _context.Entradas
+            .AsNoTracking()
             .Include(e => e.Compra)
             .Include(e => e.Sector)
             .FirstOrDefaultAsync(e => e.CodigoUnico == codigoUnico, ct);
@@ -27,6 +29,7 @@ public class EntradaRepository : IEntradaRepository
     public async Task<PagedResult<Entrada>> GetByUsuarioAsync(Guid usuarioId, int page, int pageSize, CancellationToken ct = default)
     {
         var query = _context.Entradas
+            .AsNoTracking()
             .Where(e => e.Compra.UsuarioId == usuarioId)
             .OrderByDescending(e => e.FechaCreacion);
 
@@ -43,7 +46,7 @@ public class EntradaRepository : IEntradaRepository
 
     public async Task<PagedResult<Entrada>> GetByCompraAsync(Guid compraId, CancellationToken ct = default)
     {
-        var query = _context.Entradas.Where(e => e.CompraId == compraId);
+        var query = _context.Entradas.AsNoTracking().Where(e => e.CompraId == compraId);
         var total = await query.CountAsync(ct);
         var items = await query
             .Include(e => e.Compra)

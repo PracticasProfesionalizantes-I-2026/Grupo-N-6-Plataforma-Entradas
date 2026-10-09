@@ -18,7 +18,7 @@ public class SectorCreateDTO
     public decimal PrecioBase { get; set; }
 }
 
-public class EventoCreateDTO
+public class EventoCreateDTO : IValidatableObject
 {
     [Required]
     [MaxLength(200)]
@@ -44,6 +44,15 @@ public class EventoCreateDTO
     [Required]
     [MinLength(1, ErrorMessage = "Debe haber al menos un sector.")]
     public List<SectorCreateDTO> Sectores { get; set; } = new();
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (FechaInicio >= FechaFin)
+            yield return new ValidationResult("La fecha de fin debe ser posterior a la de inicio", [nameof(FechaFin)]);
+
+        if (FechaInicio < DateTime.Today)
+            yield return new ValidationResult("La fecha de inicio debe ser futura", [nameof(FechaInicio)]);
+    }
 }
 
 public class EventoUpdateDTO

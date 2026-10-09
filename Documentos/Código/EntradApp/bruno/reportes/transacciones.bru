@@ -1,8 +1,8 @@
 {
-  "name": "Registro de Transacciones",
+  "name": "Transacciones del Evento",
   "type": "http-request",
   "method": "GET",
-  "url": "http://localhost:5000/api/v1/eventos/{{eventoId}}/transacciones?page=1&pageSize=20",
+  "url": "http://localhost:5000/api/v1/reportes/eventos/{{eventoId}}/transacciones?page=1&pageSize=20&fechaDesde=2026-01-01&fechaHasta=2026-12-31&estado=Aprobado",
   "headers": [
     { "name": "Authorization", "value": "Bearer {{token}}" }
   ]

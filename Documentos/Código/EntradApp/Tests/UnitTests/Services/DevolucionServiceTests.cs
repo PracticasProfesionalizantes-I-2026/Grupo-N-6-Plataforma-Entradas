@@ -32,7 +32,7 @@ public class DevolucionServiceTests
     }
 
     [Fact]
-    public async Task SolicitarDevolucionAsync_EntradaValida_RetornaDevolucion()
+    public async Task SolicitarDevolucionAsync_EntradaValida_RetornaDevolucionSolicitada()
     {
         // Arrange
         var usuarioId = Guid.NewGuid();
@@ -43,14 +43,6 @@ public class DevolucionServiceTests
 
         var dto = new DevolucionCreateDTO { EntradaId = entradaId };
 
-        var entrada = new Entrada
-        {
-            Id = entradaId,
-            CompraId = compraId,
-            SectorId = sectorId,
-            Estado = EstadoEntrada.Activa
-        };
-
         var compra = new Compra
         {
             Id = compraId,
@@ -60,16 +52,23 @@ public class DevolucionServiceTests
             Cantidad = 1
         };
 
+        var entrada = new Entrada
+        {
+            Id = entradaId,
+            CompraId = compraId,
+            SectorId = sectorId,
+            Estado = EstadoEntrada.Activa,
+            Compra = compra,
+            CodigoUnico = "EVT-TEST1234"
+        };
+
         var evento = new Evento { Id = eventoId, FechaInicio = DateTime.UtcNow.AddDays(5) };
-        var sector = new Sector { Id = sectorId };
+        var sector = new Sector { Id = sectorId, PrecioActual = 10000 };
 
         _entradaRepoMock.Setup(r => r.GetByIdAsync(entradaId, default)).ReturnsAsync(entrada);
-        _entradaRepoMock.Setup(r => r.GetByIdAsync(compraId, default)).ReturnsAsync(compra);
         _eventoRepoMock.Setup(r => r.GetByIdAsync(eventoId, default)).ReturnsAsync(evento);
-        _sectorRepoMock.Setup(r => r.GetByIdAsync(sectorId)).ReturnsAsync(sector);
+        _sectorRepoMock.Setup(r => r.GetByIdAsync(sectorId, default)).ReturnsAsync(sector);
         _devolucionRepoMock.Setup(r => r.CreateAsync(It.IsAny<Devolucion>(), default)).ReturnsAsync(Result.Success<Devolucion>(null!));
-        _entradaRepoMock.Setup(r => r.UpdateEstadoAsync(entradaId, EstadoEntrada.Devuelta, default)).ReturnsAsync(Result.Success());
-        _sectorRepoMock.Setup(r => r.IncrementarVendidasAsync(sectorId, -1, default)).ReturnsAsync(Result.Success());
 
         // Act
         var result = await _service.SolicitarDevolucionAsync(usuarioId, dto);
@@ -77,8 +76,10 @@ public class DevolucionServiceTests
         // Assert
         Assert.True(result.IsSuccess);
         Assert.NotNull(result.Value);
-        Assert.Equal(8000, result.Value.MontoReembolsado); // 80% de 10000
+        Assert.Equal(8000, result.Value.MontoReembolsado); // 80% de 10000 (precio sector)
+        Assert.Equal("Solicitada", result.Value.Estado); // Estado inicial es Solicitada
         _devolucionRepoMock.Verify(r => r.CreateAsync(It.IsAny<Devolucion>(), default), Times.Once);
-        _entradaRepoMock.Verify(r => r.UpdateEstadoAsync(entradaId, EstadoEntrada.Devuelta, default), Times.Once);
+        _entradaRepoMock.Verify(r => r.UpdateEstadoAsync(It.IsAny<Guid>(), It.IsAny<EstadoEntrada>(), default), Times.Never);
+        _sectorRepoMock.Verify(r => r.IncrementarVendidasAsync(It.IsAny<Guid>(), It.IsAny<int>(), default), Times.Never);
     }
 }

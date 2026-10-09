@@ -84,14 +84,14 @@ public class EntradaService : IEntradaService
                     col.Item().Text($"Evento: {compra!.Evento!.Nombre}").FontSize(18).Bold();
                     col.Item().Text($"Fecha: {compra.Evento.FechaInicio:dd/MM/yyyy HH:mm}");
                     col.Item().Text($"Lugar: {compra.Evento.Lugar}, {compra.Evento.Direccion}");
-                    col.Item().LineHorizontal(1).LineColor(Colors.Grey.Light).MarginVertical(10);
+                    col.Item().PaddingVertical(10).LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
                     
                     col.Item().Text($"Sector: {entrada.Sector!.Nombre}").FontSize(14).Bold();
                     col.Item().Text($"DNI: {entrada.Dni}");
-                    col.Item().Text($"Código único: {entrada.CodigoUnico}").FontSize(12).FontColor(Colors.Grey.Dark);
+                    col.Item().Text($"Código único: {entrada.CodigoUnico}").FontSize(12).FontColor(Colors.Grey.Darken2);
                     col.Item().Text($"Estado: {entrada.Estado}");
                     
-                    col.Item().LineHorizontal(1).LineColor(Colors.Grey.Light).MarginVertical(10);
+                    col.Item().PaddingVertical(10).LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
                     col.Item().Text($"Total pagado: ${compra.Total:F2}").FontSize(16).Bold().FontColor(Colors.Green.Medium);
                     col.Item().Text($"Fecha de compra: {compra.FechaCreacion:dd/MM/yyyy HH:mm}");
                 });
@@ -112,7 +112,10 @@ public class EntradaService : IEntradaService
         if (entrada.Estado != EstadoEntrada.Activa) return Result.Failure<EntradaResponseDTO>("La entrada no está activa");
 
         await _entradaRepository.UpdateEstadoAsync(entrada.Id, EstadoEntrada.Utilizada);
-        return Result.Success(MapToResponseDTO(entrada));
+        
+        // Recargar para obtener FechaValidacion actualizada
+        var entradaActualizada = await _entradaRepository.GetByCodigoUnicoAsync(codigoUnico);
+        return Result.Success(MapToResponseDTO(entradaActualizada!));
     }
 
     private static EntradaResponseDTO MapToResponseDTO(Entrada e) => new()
@@ -125,6 +128,9 @@ public class EntradaService : IEntradaService
         CodigoUnico = e.CodigoUnico,
         Estado = e.Estado,
         FechaValidacion = e.FechaValidacion,
-        FechaCreacion = e.FechaCreacion
+        FechaCreacion = e.FechaCreacion,
+        EventoNombre = e.Sector?.Evento?.Nombre,
+        EventoFechaInicio = e.Sector?.Evento?.FechaInicio,
+        EventoLugar = e.Sector?.Evento?.Lugar
     };
 }

@@ -8,6 +8,9 @@
   ],
   "body": {
     "type": "json",
-    "content": "{\n  \"email\": \"usuario@test.com\",\n  \"password\": \"Usuario123!\"\n  }"
+    "content": "{\n  \"email\": \"usuario@test.com\",\n  \"password\": \"Usuario123!\"\n}"
+  },
+  "scripts": {
+    "post-response": "if (res.status === 200) { bruno.setVar('token', res.body.token); bruno.setVar('usuarioId', res.body.usuario.id); }"
   }
 }

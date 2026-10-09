@@ -106,20 +106,24 @@ public class UsuarioService : IUsuarioService
         return Result.Success();
     }
 
-    public async Task<Result> LoginAsync(string email, string password)
+    public async Task<Result<LoginResponseDTO>> LoginAsync(string email, string password)
     {
         var usuario = await _usuarioRepository.GetByEmailAsync(email);
         if (usuario == null || !usuario.Activo)
-            return Result.Failure("Credenciales inválidas");
+            return Result.Failure<LoginResponseDTO>("Credenciales inválidas");
 
         if (!BCrypt.Net.BCrypt.Verify(password, usuario.PasswordHash))
-            return Result.Failure("Credenciales inválidas");
+            return Result.Failure<LoginResponseDTO>("Credenciales inválidas");
 
         var token = GenerarTokenJwt(usuario);
         usuario.FechaUltimoLogin = DateTime.UtcNow;
         await _usuarioRepository.UpdateAsync(usuario);
 
-        return Result.Success(new { Token = token, Usuario = MapToResponseDTO(usuario) });
+        return Result.Success(new LoginResponseDTO
+        {
+            Token = token,
+            Usuario = MapToResponseDTO(usuario)
+        });
     }
 
     private string GenerarTokenJwt(Usuario usuario)

@@ -1,0 +1,9 @@
+{
+  "name": "Transacciones del Evento (CSV Export)",
+  "type": "http-request",
+  "method": "GET",
+  "url": "http://localhost:5000/api/v1/reportes/eventos/{{eventoId}}/transacciones?page=1&pageSize=100&format=csv",
+  "headers": [
+    { "name": "Authorization", "value": "Bearer {{token}}" }
+  ]
+}

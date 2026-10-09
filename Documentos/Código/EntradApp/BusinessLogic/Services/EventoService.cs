@@ -62,14 +62,59 @@ public class EventoService : IEventoService
 
     public async Task<PagedResult<EventoResumenDTO>> GetAprobadosAsync(int page, int pageSize)
     {
-        var result = await _eventoRepository.GetAprobadosAsync(page, 10);
+        var result = await _eventoRepository.GetAprobadosAsync(page, pageSize);
         var items = result.Items.Select(MapToResumenDTO).ToList();
         return new PagedResult<EventoResumenDTO>(items, result.PageNumber, result.PageSize, result.TotalCount);
     }
 
+    private static readonly string[] SortByValidos = ["fecha", "nombre", "precio"];
+    private const int MaxPageSize = 100;
+
+    public async Task<PagedResult<EventoResumenDTO>> GetAprobadosConFiltrosAsync(
+        DateTime? fechaDesde,
+        DateTime? fechaHasta,
+        string? lugar,
+        decimal? precioMin,
+        decimal? precioMax,
+        string? sortBy,
+        bool sortDesc,
+        int page,
+        int pageSize)
+    {
+        var errorValidacion = ValidarParametrosListado(page, pageSize, fechaDesde, fechaHasta, precioMin, precioMax, sortBy);
+        if (errorValidacion != null) return new PagedResult<EventoResumenDTO>([], 1, pageSize, 0);
+
+        var result = await _eventoRepository.GetAprobadosConFiltrosAsync(
+            fechaDesde, fechaHasta, lugar, precioMin, precioMax, sortBy, sortDesc, page, pageSize);
+        var items = result.Items.Select(MapToResumenDTO).ToList();
+        return new PagedResult<EventoResumenDTO>(items, result.PageNumber, result.PageSize, result.TotalCount);
+    }
+
+    private static string? ValidarParametrosListado(
+        int page, int pageSize,
+        DateTime? fechaDesde, DateTime? fechaHasta,
+        decimal? precioMin, decimal? precioMax,
+        string? sortBy)
+    {
+        if (page < 1) return "El número de página debe ser mayor a 0";
+        if (pageSize < 1) return "El tamaño de página debe ser mayor a 0";
+        if (pageSize > MaxPageSize) return $"El tamaño de página no puede exceder {MaxPageSize}";
+
+        if (fechaDesde.HasValue && fechaHasta.HasValue && fechaDesde > fechaHasta)
+            return "La fecha 'desde' no puede ser posterior a la fecha 'hasta'";
+
+        if (precioMin.HasValue && precioMax.HasValue && precioMin > precioMax)
+            return "El precio mínimo no puede ser mayor al precio máximo";
+
+        if (!string.IsNullOrWhiteSpace(sortBy) && !SortByValidos.Contains(sortBy.ToLower()))
+            return $"El campo 'sortBy' debe ser uno de: {string.Join(", ", SortByValidos)}";
+
+        return null;
+    }
+
     public async Task<PagedResult<EventoResumenDTO>> GetMisEventosAsync(Guid usuarioId, int page, int pageSize)
     {
-        var result = await _eventoRepository.GetByCreadorAsync(usuarioId, page, 10);
+        var result = await _eventoRepository.GetByCreadorAsync(usuarioId, page, pageSize);
         var items = result.Items.Select(MapToResumenDTO).ToList();
         return new PagedResult<EventoResumenDTO>(items, result.PageNumber, result.PageSize, result.TotalCount);
     }
@@ -106,6 +151,31 @@ public class EventoService : IEventoService
         if (evento.UsuarioCreadorId != usuarioId) return Result.Failure("No tiene permisos para eliminar este evento");
 
         await _eventoRepository.SoftDeleteAsync(eventoId);
+        return Result.Success();
+    }
+
+    public async Task<Result> CancelarAsync(Guid usuarioId, Guid eventoId)
+    {
+        var evento = await _eventoRepository.GetByIdAsync(eventoId);
+        if (evento == null) return Result.Failure("Evento no encontrado");
+        if (evento.UsuarioCreadorId != usuarioId) return Result.Failure("No tiene permisos para cancelar este evento");
+
+        if (evento.Estado == EstadoEvento.Cancelado || evento.Estado == EstadoEvento.Finalizado || evento.Estado == EstadoEvento.Rechazado)
+            return Result.Failure("No se puede cancelar un evento ya cancelado, finalizado o rechazado");
+
+        if (evento.Estado == EstadoEvento.Aprobado)
+        {
+            // Liberar stock de sectores
+            foreach (var sector in evento.Sectores.Where(s => !s.EsBorrado))
+            {
+                await _sectorRepository.IncrementarVendidasAsync(sector.Id, -sector.EntradasVendidas);
+            }
+        }
+
+        evento.Estado = EstadoEvento.Cancelado;
+        evento.FechaActualizacion = DateTime.UtcNow;
+
+        await _eventoRepository.UpdateAsync(evento);
         return Result.Success();
     }
 
