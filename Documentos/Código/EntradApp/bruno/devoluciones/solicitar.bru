@@ -5,5 +5,8 @@
   "url": "http://localhost:5000/api/v1/devoluciones/{{entradaId}}",
   "headers": [
     { "name": "Authorization", "value": "Bearer {{token}}" }
-  ]
+  ],
+  "scripts": {
+    "post-response": "if (res.status === 200) { bruno.setVar('devolucionId', res.body.id); }"
+  }
 }

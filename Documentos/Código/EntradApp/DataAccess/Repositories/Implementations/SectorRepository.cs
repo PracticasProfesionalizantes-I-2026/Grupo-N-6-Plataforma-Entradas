@@ -12,13 +12,13 @@ public class SectorRepository : ISectorRepository
     public SectorRepository(EntradAppDbContext context) => _context = context;
 
     public async Task<Sector?> GetByIdAsync(Guid id, CancellationToken ct = default)
-        => await _context.Sectores.FirstOrDefaultAsync(s => s.Id == id, ct);
+        => await _context.Sectores.AsNoTracking().FirstOrDefaultAsync(s => s.Id == id, ct);
 
     public async Task<List<Sector>> GetByEventoAsync(Guid eventoId, CancellationToken ct = default)
-        => await _context.Sectores.Where(s => s.EventoId == eventoId).ToListAsync(ct);
+        => await _context.Sectores.AsNoTracking().Where(s => s.EventoId == eventoId).ToListAsync(ct);
 
     public async Task<Sector?> GetByIdWithEventoAsync(Guid id, CancellationToken ct = default)
-        => await _context.Sectores
+        => await _context.Sectores.AsNoTracking()
             .Include(s => s.Evento)
             .FirstOrDefaultAsync(s => s.Id == id, ct);
 

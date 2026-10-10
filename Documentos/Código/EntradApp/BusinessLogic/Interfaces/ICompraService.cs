@@ -10,4 +10,5 @@ public interface ICompraService
     Task<Result> CancelarCompraAsync(Guid usuarioId, Guid compraId);
     Task<Result<CompraResponseDTO>> GetByIdAsync(Guid compraId);
     Task<PagedResult<CompraResponseDTO>> GetByUsuarioAsync(Guid usuarioId, int page, int pageSize);
+    Task<PagedResult<CompraResponseDTO>> GetByEventoAsync(Guid eventoId, DateTime? fechaDesde, DateTime? fechaHasta, string? estado, int page, int pageSize);
 }

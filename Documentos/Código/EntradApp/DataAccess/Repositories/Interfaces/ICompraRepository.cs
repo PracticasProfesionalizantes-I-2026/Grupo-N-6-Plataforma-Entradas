@@ -8,6 +8,7 @@ public interface ICompraRepository
 {
     Task<Compra?> GetByIdAsync(Guid id, CancellationToken ct = default);
     Task<PagedResult<Compra>> GetByUsuarioAsync(Guid usuarioId, int page, int pageSize, CancellationToken ct = default);
+    Task<PagedResult<Compra>> GetByEventoAsync(Guid eventoId, DateTime? fechaDesde, DateTime? fechaHasta, string? estado, int page, int pageSize, CancellationToken ct = default);
     Task<Result<Compra>> CreateAsync(Compra compra, CancellationToken ct = default);
     Task<Result> UpdateEstadoAsync(Guid compraId, EstadoCompra nuevoEstado, CancellationToken ct = default);
     Task<int> ContarEntradasUsuarioEventoAsync(Guid usuarioId, Guid eventoId, CancellationToken ct = default);

@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\API\EntradApp.API.csproj" />
-    <ProjectReference Include="..\..\..\DataAccess\EntradApp.DataAccess.csproj" />
+    <ProjectReference Include="..\..\API\EntradApp.API.csproj" />
+    <ProjectReference Include="..\..\DataAccess\EntradApp.DataAccess.csproj" />
+    <ProjectReference Include="..\..\Shared\EntradApp.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

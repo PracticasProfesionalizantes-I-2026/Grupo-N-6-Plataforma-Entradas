@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EntradApp.Tests.IntegrationTests;
 
-public class CustomWebApplicationFactory : WebApplicationFactory<EntradApp.API.Program>
+public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {

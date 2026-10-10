@@ -8,6 +8,17 @@ public interface IEventoRepository
 {
     Task<Evento?> GetByIdAsync(Guid id, CancellationToken ct = default);
     Task<PagedResult<Evento>> GetAprobadosAsync(int page, int pageSize, CancellationToken ct = default);
+    Task<PagedResult<Evento>> GetAprobadosConFiltrosAsync(
+        DateTime? fechaDesde,
+        DateTime? fechaHasta,
+        string? lugar,
+        decimal? precioMin,
+        decimal? precioMax,
+        string? sortBy,
+        bool sortDesc,
+        int page,
+        int pageSize,
+        CancellationToken ct = default);
     Task<PagedResult<Evento>> GetByCreadorAsync(Guid usuarioId, int page, int pageSize, CancellationToken ct = default);
     Task<PagedResult<Evento>> GetPendientesAsync(int page, int pageSize, CancellationToken ct = default);
     Task<Result<Evento>> CreateAsync(Evento evento, CancellationToken ct = default);

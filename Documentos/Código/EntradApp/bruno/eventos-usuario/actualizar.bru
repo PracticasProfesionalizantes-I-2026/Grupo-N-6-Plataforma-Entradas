@@ -1,0 +1,14 @@
+{
+  "name": "Actualizar Evento",
+  "type": "http-request",
+  "method": "PUT",
+  "url": "http://localhost:5000/api/v1/eventos/{{eventoId}}",
+  "headers": [
+    { "name": "Content-Type", "value": "application/json" },
+    { "name": "Authorization", "value": "Bearer {{token}}" }
+  ],
+  "body": {
+    "type": "json",
+    "content": "{\n  \"nombre\": \"Concierto Rock 2026 - Actualizado\",\n  \"descripcion\": \"Gran concierto de rock actualizado\",\n  \"fechaInicio\": \"2026-12-20T20:00:00\",\n  \"fechaFin\": \"2026-12-20T23:00:00\",\n  \"lugar\": \"Estadio Norte\",\n  \"direccion\": \"Av. Norte 456\"\n}"
+  }
+}

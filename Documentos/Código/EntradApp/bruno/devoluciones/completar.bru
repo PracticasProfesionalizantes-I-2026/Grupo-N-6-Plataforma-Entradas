@@ -1,0 +1,9 @@
+{
+  "name": "Completar Devolución (SuperAdmin)",
+  "type": "http-request",
+  "method": "PUT",
+  "url": "http://localhost:5000/api/v1/devoluciones/{{devolucionId}}/completar",
+  "headers": [
+    { "name": "Authorization", "value": "Bearer {{adminToken}}" }
+  ]
+}

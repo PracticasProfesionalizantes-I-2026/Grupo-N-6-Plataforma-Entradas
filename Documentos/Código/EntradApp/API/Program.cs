@@ -6,6 +6,7 @@ using EntradApp.DataAccess;
 using EntradApp.DataAccess.Repositories.Implementations;
 using EntradApp.DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -91,7 +92,6 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseScalar();
 }
 
 app.UseHttpsRedirection();
@@ -99,3 +99,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
+
+public partial class Program { }

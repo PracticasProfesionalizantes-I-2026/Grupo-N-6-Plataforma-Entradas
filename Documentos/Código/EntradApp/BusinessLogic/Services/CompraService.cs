@@ -46,9 +46,17 @@ public class CompraService : ICompraService
         if (dto.Dnis.Count != dto.Cantidad)
             return Result.Failure<CompraResponseDTO>("Debe proporcionar un DNI por cada entrada");
 
-        await _validacionCompraService.ValidarDisponibilidadAsync(dto.SectorId, dto.Cantidad);
-        await _validacionCompraService.ValidarLimiteMaximoAsync(usuarioId, dto.EventoId, dto.Cantidad);
-        await _validacionCompraService.ValidarDnisDuplicadosAsync(dto.EventoId, dto.Dnis);
+        var dispResult = await _validacionCompraService.ValidarDisponibilidadAsync(dto.SectorId, dto.Cantidad);
+        if (!dispResult.IsSuccess)
+            return Result.Failure<CompraResponseDTO>(dispResult.Error!);
+
+        var limiteResult = await _validacionCompraService.ValidarLimiteMaximoAsync(usuarioId, dto.EventoId, dto.Cantidad);
+        if (!limiteResult.IsSuccess)
+            return Result.Failure<CompraResponseDTO>(limiteResult.Error!);
+
+        var dnisResult = await _validacionCompraService.ValidarDnisDuplicadosAsync(dto.EventoId, dto.Dnis);
+        if (!dnisResult.IsSuccess)
+            return Result.Failure<CompraResponseDTO>(dnisResult.Error!);
 
         var reservaResult = await _reservaTemporalService.CrearReservaAsync(
             Guid.NewGuid(), dto.SectorId, dto.Cantidad, 10);
@@ -137,9 +145,41 @@ public class CompraService : ICompraService
         return new PagedResult<CompraResponseDTO>(items, result.PageNumber, result.PageSize, result.TotalCount);
     }
 
+    private static readonly string[] EstadosCompraValidos = ["PendientePago", "Aprobado", "Cancelada"];
+    private const int MaxPageSize = 100;
+
+    public async Task<PagedResult<CompraResponseDTO>> GetByEventoAsync(Guid eventoId, DateTime? fechaDesde, DateTime? fechaHasta, string? estado, int page, int pageSize)
+    {
+        var errorValidacion = ValidarParametrosReporte(page, pageSize, fechaDesde, fechaHasta, estado);
+        if (errorValidacion != null) return new PagedResult<CompraResponseDTO>([], 1, pageSize, 0);
+
+        var result = await _compraRepository.GetByEventoAsync(eventoId, fechaDesde, fechaHasta, estado, page, pageSize);
+        var items = result.Items.Select(c => MapToResponseDTO(c, c.Entradas, c.Sector!, c.Evento!)).ToList();
+        return new PagedResult<CompraResponseDTO>(items, result.PageNumber, result.PageSize, result.TotalCount);
+    }
+
+    private static string? ValidarParametrosReporte(
+        int page, int pageSize,
+        DateTime? fechaDesde, DateTime? fechaHasta,
+        string? estado)
+    {
+        if (page < 1) return "El número de página debe ser mayor a 0";
+        if (pageSize < 1) return "El tamaño de página debe ser mayor a 0";
+        if (pageSize > MaxPageSize) return $"El tamaño de página no puede exceder {MaxPageSize}";
+
+        if (fechaDesde.HasValue && fechaHasta.HasValue && fechaDesde > fechaHasta)
+            return "La fecha 'desde' no puede ser posterior a la fecha 'hasta'";
+
+        if (!string.IsNullOrWhiteSpace(estado) && !EstadosCompraValidos.Contains(estado, StringComparer.OrdinalIgnoreCase))
+            return $"El estado debe ser uno de: {string.Join(", ", EstadosCompraValidos)}";
+
+        return null;
+    }
+
     private static CompraResponseDTO MapToResponseDTO(Compra c, IEnumerable<Entrada> entradas, Sector sector, Evento evento) => new()
     {
         Id = c.Id,
+        UsuarioId = c.UsuarioId,
         EventoId = c.EventoId,
         EventoNombre = evento.Nombre,
         SectorId = c.SectorId,
@@ -159,4 +199,6 @@ public class CompraService : ICompraService
         }).ToList(),
         CodigoQR = $"QR-{c.Id:N}"
     };
+
+    private static string GenerarCodigoUnico() => $"EVT-{Guid.NewGuid().ToString("N")[..8].ToUpper()}";
 }

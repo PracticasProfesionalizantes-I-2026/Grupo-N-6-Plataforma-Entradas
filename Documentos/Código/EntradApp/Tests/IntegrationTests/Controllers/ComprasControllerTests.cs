@@ -1,7 +1,9 @@
 using EntradApp.Tests.IntegrationTests;
 using EntradApp.Shared.DTOs.Compra;
+using EntradApp.Shared.DTOs.Evento;
 using EntradApp.Shared.Enums;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using Xunit;
 

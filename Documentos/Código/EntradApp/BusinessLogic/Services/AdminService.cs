@@ -76,6 +76,9 @@ public class AdminService : IAdminService
 
     public async Task<Result> RechazarEventoAsync(Guid adminId, Guid eventoId, string motivo)
     {
+        if (string.IsNullOrWhiteSpace(motivo))
+            return Result.Failure("El motivo de rechazo es obligatorio");
+
         var evento = await _eventoRepository.GetByIdAsync(eventoId);
         if (evento == null) return Result.Failure("Evento no encontrado");
         if (evento.Estado != EstadoEvento.PendienteAprobacion)

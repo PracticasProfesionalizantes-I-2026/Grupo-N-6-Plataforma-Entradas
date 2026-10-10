@@ -88,10 +88,19 @@ EntradApp/
 ## Estados de Evento (Maquina de Estados)
 
 ```
-Borrador -> PendienteAprobacion -> Aprobado -> Cancelado/Finalizado
-                      -> Rechazado (NO vuelve a Pendiente)
+PendienteAprobacion -> Aprobado -> Finalizado (job automático 1h)
+                     -> Cancelado (manual por creador)
+                     -> Rechazado (manual por SuperAdmin, NO vuelve a Pendiente)
 Cualquiera -> Borrado (soft delete)
 ```
+
+**Estado inicial**: `PendienteAprobacion` (al crear evento)
+**Transiciones válidas**:
+- `PendienteAprobacion` → `Aprobado` (SuperAdmin)
+- `PendienteAprobacion` → `Rechazado` (SuperAdmin, con motivo)
+- `Aprobado` → `Finalizado` (Job automático cuando FechaFin < Now)
+- `Aprobado` → `Cancelado` (Creador del evento)
+- Cualquier estado → `Borrado` (Soft delete, oculta pero no elimina)
 
 ## Excepciones Tipadas -> HTTP Codes
 

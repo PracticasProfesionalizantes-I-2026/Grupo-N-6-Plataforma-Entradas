@@ -61,3 +61,30 @@ public class UsuarioResponseDTO
     public bool Activo { get; set; }
     public DateTime FechaCreacion { get; set; }
 }
+
+public class LoginResponseDTO
+{
+    public string Token { get; set; } = string.Empty;
+    public UsuarioResponseDTO Usuario { get; set; } = new();
+}
+
+public class LoginRequestDTO
+{
+    [Required(ErrorMessage = "El email es obligatorio")]
+    [EmailAddress(ErrorMessage = "El formato de email no es válido")]
+    public string Email { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "La contraseña es obligatoria")]
+    public string Password { get; set; } = string.Empty;
+}
+
+public class ActualizarPasswordDTO
+{
+    [Required(ErrorMessage = "La contraseña actual es obligatoria")]
+    public string PasswordActual { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "La nueva contraseña es obligatoria")]
+    [MinLength(6, ErrorMessage = "La nueva contraseña debe tener al menos 6 caracteres")]
+    [MaxLength(100)]
+    public string PasswordNueva { get; set; } = string.Empty;
+}

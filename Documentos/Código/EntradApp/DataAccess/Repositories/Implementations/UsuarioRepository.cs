@@ -12,13 +12,13 @@ public class UsuarioRepository : IUsuarioRepository
     public UsuarioRepository(EntradAppDbContext context) => _context = context;
 
     public async Task<Usuario?> GetByIdAsync(Guid id, CancellationToken ct = default)
-        => await _context.Usuarios.FirstOrDefaultAsync(u => u.Id == id, ct);
+        => await _context.Usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id, ct);
 
     public async Task<Usuario?> GetByEmailAsync(string email, CancellationToken ct = default)
-        => await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email, ct);
+        => await _context.Usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email, ct);
 
     public async Task<Usuario?> GetByDniAsync(string dni, CancellationToken ct = default)
-        => await _context.Usuarios.FirstOrDefaultAsync(u => u.Dni == dni, ct);
+        => await _context.Usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.Dni == dni, ct);
 
     public async Task<Result<Usuario>> CreateAsync(Usuario usuario, CancellationToken ct = default)
     {

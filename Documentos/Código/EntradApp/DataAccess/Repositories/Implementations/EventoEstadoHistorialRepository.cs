@@ -13,6 +13,7 @@ public class EventoEstadoHistorialRepository : IEventoEstadoHistorialRepository
 
     public async Task<List<EventoEstadoHistorial>> GetByEventoAsync(Guid eventoId, CancellationToken ct = default)
         => await _context.EventosEstadosHistorial
+            .AsNoTracking()
             .Where(h => h.EventoId == eventoId)
             .OrderBy(h => h.FechaCambio)
             .ToListAsync(ct);

@@ -1,6 +1,7 @@
 using EntradApp.BusinessLogic.Services;
 using EntradApp.DataAccess.Entities;
 using EntradApp.DataAccess.Repositories.Interfaces;
+using Microsoft.Extensions.Configuration;
 using EntradApp.Shared.Common;
 using EntradApp.Shared.DTOs.Usuario;
 using EntradApp.Shared.Enums;

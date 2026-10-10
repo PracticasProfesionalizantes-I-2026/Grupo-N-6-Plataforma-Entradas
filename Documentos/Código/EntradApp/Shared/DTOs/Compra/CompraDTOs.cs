@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using EntradApp.Shared.Enums;
+using EntradApp.Shared.ValidationAttributes;
 
 namespace EntradApp.Shared.DTOs.Compra;
 
@@ -17,6 +18,7 @@ public class CompraCreateDTO
 
     [Required]
     [MinLength(1, ErrorMessage = "Debe proporcionar un DNI por cada entrada.")]
+    [DniList]
     public List<string> Dnis { get; set; } = new();
 }
 
@@ -37,6 +39,7 @@ public class EntradaEnComprobanteDTO
 public class CompraResponseDTO
 {
     public Guid Id { get; set; }
+    public Guid UsuarioId { get; set; }
     public Guid EventoId { get; set; }
     public string EventoNombre { get; set; } = string.Empty;
     public Guid SectorId { get; set; }

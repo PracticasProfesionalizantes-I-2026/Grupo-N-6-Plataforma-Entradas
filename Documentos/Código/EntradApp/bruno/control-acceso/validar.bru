@@ -1,0 +1,14 @@
+{
+  "name": "Validar Entrada en Puerta",
+  "type": "http-request",
+  "method": "POST",
+  "url": "http://localhost:5000/api/v1/control-acceso/validar",
+  "headers": [
+    { "name": "Content-Type", "value": "application/json" },
+    { "name": "Authorization", "value": "Bearer {{adminToken}}" }
+  ],
+  "body": {
+    "type": "json",
+    "content": "{\n  \"codigoUnico\": \"EVT-A1B2C3D4\"\n}"
+  }
+}

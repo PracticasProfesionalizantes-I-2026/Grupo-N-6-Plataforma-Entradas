@@ -1,0 +1,14 @@
+{
+  "name": "Actualizar Mi Perfil",
+  "type": "http-request",
+  "method": "PUT",
+  "url": "http://localhost:5000/api/v1/usuarios/perfil",
+  "headers": [
+    { "name": "Content-Type", "value": "application/json" },
+    { "name": "Authorization", "value": "Bearer {{token}}" }
+  ],
+  "body": {
+    "type": "json",
+    "content": "{\n  \"nombre\": \"Nuevo Nombre\",\n  \"apellido\": \"Nuevo Apellido\",\n  \"email\": \"nuevo@email.com\",\n  \"dni\": \"87654321\",\n  \"fechaNacimiento\": \"1995-05-15T00:00:00\"\n}"
+  }
+}
