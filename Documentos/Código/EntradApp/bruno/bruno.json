@@ -1,5 +1,6 @@
 {
   "name": "EntradApp",
+  "version": "1.0.0",
   "type": "collection",
   "folders": [
     { "name": "Auth", "id": "auth" },
