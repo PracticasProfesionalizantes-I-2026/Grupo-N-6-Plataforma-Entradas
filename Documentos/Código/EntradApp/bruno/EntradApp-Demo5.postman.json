@@ -1,0 +1,124 @@
+{
+  "info": {
+    "name": "EntradApp - 5 Casos Demo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000", "type": "string" },
+    { "key": "eventoId", "value": "", "type": "string" },
+    { "key": "sectorId", "value": "", "type": "string" },
+    { "key": "compraId", "value": "", "type": "string" },
+    { "key": "entradaId", "value": "", "type": "string" },
+    { "key": "devolucionId", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "C1-1 Listar Eventos Aprobados",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/eventos?page=1&pageSize=10",
+        "header": []
+      }
+    },
+    {
+      "name": "C1-2 Ver Sectores del Evento",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/eventos/{{eventoId}}/sectores",
+        "header": []
+      }
+    },
+    {
+      "name": "C1-3 Crear Compra (Reserva 10 min + Validaciones)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/v1/compras",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"eventoId\": \"{{eventoId}}\",\n  \"sectorId\": \"{{sectorId}}\",\n  \"cantidad\": 2,\n  \"dnis\": [\"12345678\", \"87654321\"]\n}"
+        }
+      }
+    },
+    {
+      "name": "C1-4 Confirmar Pago (Genera códigos EVT-XXXXXXXX)",
+      "request": {
+        "method": "PATCH",
+        "url": "{{baseUrl}}/api/v1/compras/{{compraId}}/confirmar-pago",
+        "header": []
+      }
+    },
+    {
+      "name": "C1-5 Generar Comprobante PDF",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/entradas/{{entradaId}}/comprobante",
+        "header": []
+      }
+    },
+    {
+      "name": "C2-1 Crear Evento con Sectores (Estado: PendienteAprobacion)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/v1/eventos",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Concierto Demo 2026\",\n  \"descripcion\": \"Evento para demostración\",\n  \"fechaInicio\": \"2026-12-20T20:00:00\",\n  \"fechaFin\": \"2026-12-20T23:00:00\",\n  \"lugar\": \"Estadio Demo\",\n  \"direccion\": \"Av. Demo 123\",\n  \"sectores\": [\n    { \"nombre\": \"VIP\", \"capacidad\": 50, \"precioBase\": 25000 },\n    { \"nombre\": \"Platea\", \"capacidad\": 100, \"precioBase\": 15000 },\n    { \"nombre\": \"Popular\", \"capacidad\": 200, \"precioBase\": 8000 }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "C3-1 Ocupación del Evento (% por sector, stock, alerta >80%)",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/reportes/eventos/{{eventoId}}/ocupacion",
+        "header": []
+      }
+    },
+    {
+      "name": "C3-2 Estadísticas del Evento (Ingresos, ventas totales)",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/reportes/eventos/{{eventoId}}/estadisticas",
+        "header": []
+      }
+    },
+    {
+      "name": "C4-1 Eventos Pendientes de Aprobación (Admin)",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/admin/eventos/pendientes?page=1&pageSize=10",
+        "header": []
+      }
+    },
+    {
+      "name": "C4-2 Aprobar Evento (PendienteAprobacion → Aprobado)",
+      "request": {
+        "method": "PATCH",
+        "url": "{{baseUrl}}/api/v1/admin/eventos/{{eventoId}}/estado",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nuevoEstado\": \"Aprobado\",\n  \"observaciones\": \"Evento aprobado para demo\"\n}"
+        }
+      }
+    },
+    {
+      "name": "C5-1 Solicitar Devolución (Entrada → Devuelta, Stock++)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/v1/devoluciones/{{entradaId}}",
+        "header": []
+      }
+    },
+    {
+      "name": "C5-2 Completar Devolución - Admin (Reembolso 80%)",
+      "request": {
+        "method": "PUT",
+        "url": "{{baseUrl}}/api/v1/devoluciones/{{devolucionId}}/completar",
+        "header": []
+      }
+    }
+  ]
+}
