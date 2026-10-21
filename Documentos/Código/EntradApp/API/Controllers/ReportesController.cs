@@ -1,5 +1,7 @@
 using EntradApp.BusinessLogic.Interfaces;
 using EntradApp.Shared.Common;
+using EntradApp.Shared.DTOs.Compra;
+using EntradApp.Shared.DTOs.Sector;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -47,7 +49,7 @@ public class ReportesController : ControllerBase
 
         if (format?.ToLower() == "csv")
         {
-            var csv = GenerarCsvTransacciones(result.Items);
+            var csv = GenerarCsvTransacciones(result);
             return File(Encoding.UTF8.GetBytes(csv), "text/csv", $"transacciones-evento-{eventoId}-{DateTime.UtcNow:yyyyMMdd}.csv");
         }
 
@@ -171,7 +173,7 @@ public class ReportesController : ControllerBase
         return sb.ToString();
     }
 
-    private static string GenerarCsvEstadisticas(List<SectorResponseDTO> sectores)
+    private static string GenerarCsvEstadisticas(List<EntradApp.Shared.DTOs.Evento.SectorResponseDTO> sectores)
     {
         var sb = new StringBuilder();
         sb.AppendLine("SectorId,Nombre,Capacidad,EntradasVendidas,EntradasDisponibles,PorcentajeOcupacion,PrecioActual,Ingresos");
@@ -183,7 +185,7 @@ public class ReportesController : ControllerBase
         return sb.ToString();
     }
 
-    private static string GenerarCsvOcupacion(List<SectorResponseDTO> sectores)
+    private static string GenerarCsvOcupacion(List<EntradApp.Shared.DTOs.Evento.SectorResponseDTO> sectores)
     {
         var sb = new StringBuilder();
         sb.AppendLine("SectorId,Nombre,Capacidad,EntradasVendidas,EntradasDisponibles,PorcentajeOcupacion,PrecioBase,PrecioActual,PrecioIncrementado");

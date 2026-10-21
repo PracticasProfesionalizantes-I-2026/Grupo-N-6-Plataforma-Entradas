@@ -39,9 +39,10 @@ public class CompraRepository : ICompraRepository
         return new PagedResult<Compra>(items, page, pageSize, total);
     }
 
+
     public async Task<PagedResult<Compra>> GetByEventoAsync(Guid eventoId, DateTime? fechaDesde, DateTime? fechaHasta, string? estado, int page, int pageSize, CancellationToken ct = default)
     {
-        var query = _context.Compras
+        IQueryable<Compra> query = _context.Compras
             .AsNoTracking()
             .Where(c => c.EventoId == eventoId)
             .OrderByDescending(c => c.FechaCreacion);
@@ -69,6 +70,7 @@ public class CompraRepository : ICompraRepository
 
         return new PagedResult<Compra>(items, page, pageSize, total);
     }
+
 
     public async Task<Result<Compra>> CreateAsync(Compra compra, CancellationToken ct = default)
     {

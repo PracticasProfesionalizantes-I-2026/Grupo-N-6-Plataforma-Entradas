@@ -1,0 +1,13 @@
+# Visual Studio
+.vs/
+
+# Archivos generados por la compilación
+**/bin/
+**/obj/
+
+# Bases de datos SQLite locales
+**/*.db-shm
+**/*.db-wal
+
+# Archivo temporal utilizado para compartir el código
+codigo_completo.txt
