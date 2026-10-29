@@ -8,8 +8,8 @@ public static class DbInitializer
 {
     public static async Task InitializeAsync(EntradAppDbContext context)
     {
-        await context.Database.MigrateAsync();
-        
+        await context.Database.EnsureCreatedAsync();
+
         // Verificar si ya hay datos
         if (await context.Usuarios.AnyAsync()) return;
 

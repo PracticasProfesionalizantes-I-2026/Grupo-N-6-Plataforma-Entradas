@@ -8,7 +8,7 @@ namespace EntradApp.API.Controllers;
 
 [ApiController]
 [Route("api/v1/devoluciones")]
-[Authorize(Policy = "Usuario")]
+
 public class DevolucionesController : ControllerBase
 {
     private readonly IDevolucionService _devolucionService;
@@ -16,6 +16,7 @@ public class DevolucionesController : ControllerBase
     public DevolucionesController(IDevolucionService devolucionService) => _devolucionService = devolucionService;
 
     [HttpPost("{entradaId}")]
+    [Authorize(Policy = "Usuario")]
     public async Task<ActionResult<DevolucionResponseDTO>> SolicitarDevolucion(Guid entradaId)
     {
         var usuarioId = Guid.Parse(User.FindFirst("sub")!.Value);
@@ -26,6 +27,7 @@ public class DevolucionesController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Policy = "Usuario")]
     public async Task<ActionResult<PagedResult<DevolucionResumenDTO>>> GetMisDevoluciones(
         [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
     {

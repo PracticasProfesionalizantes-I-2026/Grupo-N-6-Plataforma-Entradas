@@ -58,11 +58,6 @@ public class CompraService : ICompraService
         if (!dnisResult.IsSuccess)
             return Result.Failure<CompraResponseDTO>(dnisResult.Error!);
 
-        var reservaResult = await _reservaTemporalService.CrearReservaAsync(
-            Guid.NewGuid(), dto.SectorId, dto.Cantidad, 10);
-        if (!reservaResult.IsSuccess)
-            return Result.Failure<CompraResponseDTO>(reservaResult.Error!);
-
         var compra = new Compra
         {
             Id = Guid.NewGuid(),
@@ -76,6 +71,12 @@ public class CompraService : ICompraService
         };
 
         await _compraRepository.CreateAsync(compra);
+
+        var reservaResult = await _reservaTemporalService.CrearReservaAsync(
+            compra.Id, dto.SectorId, dto.Cantidad, 10);
+
+        if (!reservaResult.IsSuccess)
+            return Result.Failure<CompraResponseDTO>(reservaResult.Error!);
 
         var entradas = dto.Dnis.Select((dni, index) => new Entrada
         {
