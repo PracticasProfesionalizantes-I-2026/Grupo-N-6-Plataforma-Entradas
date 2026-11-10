@@ -1,0 +1,69 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\api\\controllers\\devolucionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|solutionrelative:api\\controllers\\devolucionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\api\\controllers\\reportescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|solutionrelative:api\\controllers\\reportescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33333333-3333-3333-3333-333333333333}|BusinessLogic\\EntradApp.BusinessLogic.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\businesslogic\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33333333-3333-3333-3333-333333333333}|BusinessLogic\\EntradApp.BusinessLogic.csproj|solutionrelative:businesslogic\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DevolucionesController.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Controllers\\DevolucionesController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\DevolucionesController.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Controllers\\DevolucionesController.cs",
+              "RelativeToolTip": "API\\Controllers\\DevolucionesController.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAA+wBwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-29T22:43:23.08Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UsuarioService.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\UsuarioService.cs",
+              "RelativeDocumentMoniker": "BusinessLogic\\Services\\UsuarioService.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\UsuarioService.cs",
+              "RelativeToolTip": "BusinessLogic\\Services\\UsuarioService.cs",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAuwIoAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-29T22:11:19.029Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ReportesController.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Controllers\\ReportesController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ReportesController.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Controllers\\ReportesController.cs",
+              "RelativeToolTip": "API\\Controllers\\ReportesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-20T22:28:13.609Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

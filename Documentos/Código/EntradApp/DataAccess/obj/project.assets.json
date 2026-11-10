@@ -3946,7 +3946,7 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.300"
+      "SdkAnalysisLevel": "10.0.400"
     },
     "frameworks": {
       "net10.0": {
@@ -3984,7 +3984,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.402/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -4274,6 +4274,26 @@
       ]
     },
     {
+      "code": "NU1902",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "El paquete \"System.Security.Cryptography.Pkcs\" 9.0.0 tiene una vulnerabilidad de gravedad moderada conocida, https://github.com/advisories/GHSA-2fmv-rv2c-59x7",
+      "libraryId": "System.Security.Cryptography.Pkcs",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "El paquete \"System.Security.Cryptography.Pkcs\" 9.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-846f-f764-76mx",
+      "libraryId": "System.Security.Cryptography.Pkcs",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
       "code": "NU1903",
       "level": "Warning",
       "warningLevel": 1,
@@ -4307,7 +4327,27 @@
       "code": "NU1903",
       "level": "Warning",
       "warningLevel": 1,
+      "message": "El paquete \"System.Security.Cryptography.Xml\" 9.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-7hqp-7c5m-4vq6",
+      "libraryId": "System.Security.Cryptography.Xml",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
       "message": "El paquete \"System.Security.Cryptography.Xml\" 9.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-8q5v-6pqq-x66h",
+      "libraryId": "System.Security.Cryptography.Xml",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "El paquete \"System.Security.Cryptography.Xml\" 9.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-c399-9853-6jmj",
       "libraryId": "System.Security.Cryptography.Xml",
       "targetGraphs": [
         "net10.0"
@@ -4338,6 +4378,16 @@
       "level": "Warning",
       "warningLevel": 1,
       "message": "El paquete \"System.Security.Cryptography.Xml\" 9.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-mmjf-rqrv-855v",
+      "libraryId": "System.Security.Cryptography.Xml",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "El paquete \"System.Security.Cryptography.Xml\" 9.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-r955-8q5j-3h83",
       "libraryId": "System.Security.Cryptography.Xml",
       "targetGraphs": [
         "net10.0"

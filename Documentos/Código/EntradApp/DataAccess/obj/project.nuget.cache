@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tHizJBQXRXA=",
+  "dgSpecHash": "YJ3fW8YyKUg=",
   "success": true,
   "projectFilePath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
   "expectedPackageFiles": [
@@ -73,6 +73,30 @@
       ]
     },
     {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "El paquete \"System.Security.Cryptography.Pkcs\" 9.0.0 tiene una vulnerabilidad de gravedad moderada conocida, https://github.com/advisories/GHSA-2fmv-rv2c-59x7",
+      "projectPath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
+      "libraryId": "System.Security.Cryptography.Pkcs",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "El paquete \"System.Security.Cryptography.Pkcs\" 9.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-846f-f764-76mx",
+      "projectPath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
+      "libraryId": "System.Security.Cryptography.Pkcs",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
       "code": "NU1903",
       "level": "Warning",
       "message": "El paquete \"System.Security.Cryptography.Xml\" 9.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-23rf-6693-g89p",
@@ -111,7 +135,31 @@
     {
       "code": "NU1903",
       "level": "Warning",
+      "message": "El paquete \"System.Security.Cryptography.Xml\" 9.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-7hqp-7c5m-4vq6",
+      "projectPath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
+      "libraryId": "System.Security.Cryptography.Xml",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
       "message": "El paquete \"System.Security.Cryptography.Xml\" 9.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-8q5v-6pqq-x66h",
+      "projectPath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
+      "libraryId": "System.Security.Cryptography.Xml",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "El paquete \"System.Security.Cryptography.Xml\" 9.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-c399-9853-6jmj",
       "projectPath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
       "warningLevel": 1,
       "filePath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
@@ -148,6 +196,18 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "El paquete \"System.Security.Cryptography.Xml\" 9.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-mmjf-rqrv-855v",
+      "projectPath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
+      "libraryId": "System.Security.Cryptography.Xml",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "El paquete \"System.Security.Cryptography.Xml\" 9.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-r955-8q5j-3h83",
       "projectPath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
       "warningLevel": 1,
       "filePath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\Código\\EntradApp\\DataAccess\\EntradApp.DataAccess.csproj",
