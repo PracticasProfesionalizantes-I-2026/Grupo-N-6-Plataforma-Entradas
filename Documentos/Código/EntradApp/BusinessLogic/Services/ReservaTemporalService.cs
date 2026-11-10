@@ -1,6 +1,6 @@
+
 using EntradApp.BusinessLogic.Interfaces;
 using EntradApp.DataAccess.Entities;
-using EntradApp.DataAccess.Repositories.Implementations;
 using EntradApp.DataAccess.Repositories.Interfaces;
 using EntradApp.Shared.Common;
 using EntradApp.Shared.Enums;
@@ -39,15 +39,11 @@ public class ReservaTemporalService : IReservaTemporalService
     public async Task<Result> CrearReservaAsync(
         Guid compraId, Guid sectorId, int cantidad, int duracionMinutos)
     {
-        var sector = await _sectorRepository.GetByIdAsync(sectorId);
+        var reservaResult = await _sectorRepository.IncrementarReservadasAsync(
+            sectorId, cantidad);
 
-        if (sector == null)
-            return Result.Failure("Sector no encontrado");
-
-        if (sector.StockDisponible < cantidad)
-            return Result.Failure("Stock insuficiente para la reserva");
-
-        await _sectorRepository.IncrementarReservadasAsync(sectorId, cantidad);
+        if (!reservaResult.IsSuccess)
+            return Result.Failure(reservaResult.Error!);
 
         var reserva = new ReservaTemporal
         {
@@ -57,11 +53,22 @@ public class ReservaTemporalService : IReservaTemporalService
             Cantidad = cantidad,
             FechaCreacion = DateTime.UtcNow,
             ExpiraEn = DateTime.UtcNow.AddMinutes(
-                duracionMinutos > 0 ? duracionMinutos : _options.DuracionMinutos),
+                duracionMinutos > 0
+                    ? duracionMinutos
+                    : _options.DuracionMinutos),
             Expirada = false
         };
 
-        await _reservaRepository.CreateAsync(reserva);
+        var resultado = await _reservaRepository.CreateAsync(reserva);
+
+        if (!resultado.IsSuccess)
+        {
+            await _sectorRepository.DecrementarReservadasAsync(
+                sectorId, cantidad);
+
+            return Result.Failure(
+                resultado.Error ?? "No se pudo crear la reserva temporal");
+        }
 
         return Result.Success();
     }
@@ -74,8 +81,13 @@ public class ReservaTemporalService : IReservaTemporalService
             return Result.Success();
 
         if (!reserva.Expirada)
-            await _sectorRepository.DecrementarReservadasAsync(
+        {
+            var resultado = await _sectorRepository.DecrementarReservadasAsync(
                 reserva.SectorId, reserva.Cantidad);
+
+            if (!resultado.IsSuccess)
+                return resultado;
+        }
 
         await _reservaRepository.DeleteAsync(reserva.Id);
 
@@ -86,14 +98,23 @@ public class ReservaTemporalService : IReservaTemporalService
     {
         var reserva = await _reservaRepository.GetByCompraIdAsync(compraId);
 
-        if (reserva == null || reserva.Expirada || reserva.ExpiraEn <= DateTime.UtcNow)
+        if (reserva == null || reserva.Expirada ||
+            reserva.ExpiraEn <= DateTime.UtcNow)
+        {
             return Result.Failure("La reserva no existe o ya expiró");
+        }
 
-        await _sectorRepository.DecrementarReservadasAsync(
+        var decrementoResult = await _sectorRepository.DecrementarReservadasAsync(
             reserva.SectorId, reserva.Cantidad);
 
-        await _sectorRepository.IncrementarVendidasAsync(
+        if (!decrementoResult.IsSuccess)
+            return decrementoResult;
+
+        var ventaResult = await _sectorRepository.IncrementarVendidasAsync(
             reserva.SectorId, reserva.Cantidad);
+
+        if (!ventaResult.IsSuccess)
+            return ventaResult;
 
         await _reservaRepository.DeleteAsync(reserva.Id);
 
@@ -106,14 +127,19 @@ public class ReservaTemporalService : IReservaTemporalService
 
         foreach (var reserva in expiradas)
         {
-            await _sectorRepository.DecrementarReservadasAsync(
-                reserva.SectorId, reserva.Cantidad);
+            var decrementoResult =
+                await _sectorRepository.DecrementarReservadasAsync(
+                    reserva.SectorId, reserva.Cantidad);
+
+            if (!decrementoResult.IsSuccess)
+                continue;
 
             await _reservaRepository.MarcarExpiradaAsync(reserva.Id);
 
             var compra = await _compraRepository.GetByIdAsync(reserva.CompraId);
 
-            if (compra != null && compra.Estado == EstadoCompra.PendientePago)
+            if (compra != null &&
+                compra.Estado == EstadoCompra.PendientePago)
             {
                 await _compraRepository.UpdateEstadoAsync(
                     compra.Id, EstadoCompra.Cancelada);

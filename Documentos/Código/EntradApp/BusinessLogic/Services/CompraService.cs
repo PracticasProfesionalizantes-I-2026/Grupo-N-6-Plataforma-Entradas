@@ -1,16 +1,18 @@
 
 using EntradApp.BusinessLogic.Interfaces;
+using EntradApp.DataAccess;
 using EntradApp.DataAccess.Entities;
 using EntradApp.DataAccess.Repositories.Interfaces;
 using EntradApp.Shared.Common;
 using EntradApp.Shared.DTOs.Compra;
 using EntradApp.Shared.Enums;
-using EntradApp.Shared.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace EntradApp.BusinessLogic.Services;
 
 public class CompraService : ICompraService
 {
+    private readonly EntradAppDbContext _context;
     private readonly ICompraRepository _compraRepository;
     private readonly IEntradaRepository _entradaRepository;
     private readonly ISectorRepository _sectorRepository;
@@ -19,6 +21,7 @@ public class CompraService : ICompraService
     private readonly IReservaTemporalService _reservaTemporalService;
 
     public CompraService(
+        EntradAppDbContext context,
         ICompraRepository compraRepository,
         IEntradaRepository entradaRepository,
         ISectorRepository sectorRepository,
@@ -26,6 +29,7 @@ public class CompraService : ICompraService
         IValidacionCompraService validacionCompraService,
         IReservaTemporalService reservaTemporalService)
     {
+        _context = context;
         _compraRepository = compraRepository;
         _entradaRepository = entradaRepository;
         _sectorRepository = sectorRepository;
@@ -76,43 +80,78 @@ public class CompraService : ICompraService
         if (!dnisResult.IsSuccess)
             return Result.Failure<CompraResponseDTO>(dnisResult.Error!);
 
-        var compraId = Guid.NewGuid();
+        await using var transaction =
+            await _context.Database.BeginTransactionAsync();
 
-        var reservaResult = await _reservaTemporalService.CrearReservaAsync(
-            compraId, dto.SectorId, dto.Cantidad, 10);
-
-        if (!reservaResult.IsSuccess)
-            return Result.Failure<CompraResponseDTO>(reservaResult.Error!);
-
-        var compra = new Compra
+        try
         {
-            Id = compraId,
-            UsuarioId = usuarioId,
-            EventoId = dto.EventoId,
-            SectorId = dto.SectorId,
-            Cantidad = dto.Cantidad,
-            Total = sector.PrecioActual * dto.Cantidad,
-            Estado = EstadoCompra.PendientePago,
-            FechaCreacion = DateTime.UtcNow
-        };
+            var compraId = Guid.NewGuid();
 
-        await _compraRepository.CreateAsync(compra);
+            var reservaResult = await _reservaTemporalService.CrearReservaAsync(
+                compraId, dto.SectorId, dto.Cantidad, 10);
 
-        var entradas = dto.Dnis.Select(dni => new Entrada
+            if (!reservaResult.IsSuccess)
+            {
+                await transaction.RollbackAsync();
+
+                return Result.Failure<CompraResponseDTO>(
+                    reservaResult.Error!);
+            }
+
+            var compra = new Compra
+            {
+                Id = compraId,
+                UsuarioId = usuarioId,
+                EventoId = dto.EventoId,
+                SectorId = dto.SectorId,
+                Cantidad = dto.Cantidad,
+                Total = sector.PrecioActual * dto.Cantidad,
+                Estado = EstadoCompra.PendientePago,
+                FechaCreacion = DateTime.UtcNow
+            };
+
+            var compraResult = await _compraRepository.CreateAsync(compra);
+
+            if (!compraResult.IsSuccess)
+            {
+                await transaction.RollbackAsync();
+
+                return Result.Failure<CompraResponseDTO>(
+                    compraResult.Error!);
+            }
+
+            var entradas = dto.Dnis.Select(dni => new Entrada
+            {
+                Id = Guid.NewGuid(),
+                CompraId = compra.Id,
+                SectorId = dto.SectorId,
+                Dni = dni.Trim(),
+                CodigoUnico = GenerarCodigoUnico(),
+                Estado = EstadoEntrada.Activa,
+                FechaCreacion = DateTime.UtcNow
+            }).ToList();
+
+            var entradasResult =
+                await _entradaRepository.CreateRangeAsync(entradas);
+
+            if (!entradasResult.IsSuccess)
+            {
+                await transaction.RollbackAsync();
+
+                return Result.Failure<CompraResponseDTO>(
+                    entradasResult.Error!);
+            }
+
+            await transaction.CommitAsync();
+
+            return Result.Success(
+                MapToResponseDTO(compra, entradas, sector, evento));
+        }
+        catch
         {
-            Id = Guid.NewGuid(),
-            CompraId = compra.Id,
-            SectorId = dto.SectorId,
-            Dni = dni.Trim(),
-            CodigoUnico = GenerarCodigoUnico(),
-            Estado = EstadoEntrada.Activa,
-            FechaCreacion = DateTime.UtcNow
-        }).ToList();
-
-        await _entradaRepository.CreateRangeAsync(entradas);
-
-        return Result.Success(
-            MapToResponseDTO(compra, entradas, sector, evento));
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 
     public async Task<Result<CompraResponseDTO>> ConfirmarPagoAsync(
@@ -131,8 +170,8 @@ public class CompraService : ICompraService
             return Result.Failure<CompraResponseDTO>(
                 "La compra no está pendiente de pago");
 
-        var reservaResult = await _reservaTemporalService.ConfirmarReservaAsync(
-            compraId);
+        var reservaResult =
+            await _reservaTemporalService.ConfirmarReservaAsync(compraId);
 
         if (!reservaResult.IsSuccess)
             return Result.Failure<CompraResponseDTO>(reservaResult.Error!);
@@ -151,7 +190,8 @@ public class CompraService : ICompraService
                 compra, compra.Entradas, compra.Sector!, compra.Evento!));
     }
 
-    public async Task<Result> CancelarCompraAsync(Guid usuarioId, Guid compraId)
+    public async Task<Result> CancelarCompraAsync(
+        Guid usuarioId, Guid compraId)
     {
         var compra = await _compraRepository.GetByIdAsync(compraId);
 
@@ -254,12 +294,12 @@ public class CompraService : ICompraService
         if (pageSize > MaxPageSize)
             return $"El tamaño de página no puede exceder {MaxPageSize}";
 
-        if (fechaDesde.HasValue && fechaHasta.HasValue
-            && fechaDesde > fechaHasta)
+        if (fechaDesde.HasValue && fechaHasta.HasValue &&
+            fechaDesde > fechaHasta)
             return "La fecha 'desde' no puede ser posterior a la fecha 'hasta'";
 
-        if (!string.IsNullOrWhiteSpace(estado)
-            && !EstadosCompraValidos.Contains(
+        if (!string.IsNullOrWhiteSpace(estado) &&
+            !EstadosCompraValidos.Contains(
                 estado, StringComparer.OrdinalIgnoreCase))
         {
             return $"El estado debe ser uno de: {string.Join(", ", EstadosCompraValidos)}";
@@ -269,7 +309,10 @@ public class CompraService : ICompraService
     }
 
     private static CompraResponseDTO MapToResponseDTO(
-        Compra c, IEnumerable<Entrada> entradas, Sector sector, Evento evento)
+        Compra c,
+        IEnumerable<Entrada> entradas,
+        Sector sector,
+        Evento evento)
         => new()
         {
             Id = c.Id,
@@ -297,3 +340,4 @@ public class CompraService : ICompraService
     private static string GenerarCodigoUnico()
         => $"EVT-{Guid.NewGuid().ToString("N")[..8].ToUpper()}";
 }
+
