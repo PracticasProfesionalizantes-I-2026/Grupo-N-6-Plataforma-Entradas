@@ -10,3 +10,4 @@ C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código
 C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\obj\Debug\net10.0\refint\EntradApp.Shared.dll
 C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\obj\Debug\net10.0\EntradApp.Shared.pdb
 C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\obj\Debug\net10.0\ref\EntradApp.Shared.dll
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\Shared\obj\Debug\net10.0\EntradAp.53B39B41.Up2Date

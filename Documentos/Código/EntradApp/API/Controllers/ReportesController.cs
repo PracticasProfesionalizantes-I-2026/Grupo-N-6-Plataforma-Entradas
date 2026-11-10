@@ -1,5 +1,8 @@
+
 using EntradApp.BusinessLogic.Interfaces;
 using EntradApp.Shared.Common;
+using EntradApp.Shared.DTOs.Compra;
+using EntradApp.Shared.DTOs.Evento;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -41,13 +44,14 @@ public class ReportesController : ControllerBase
 
         var evento = await _eventoService.GetByIdAsync(eventoId);
         if (!evento.IsSuccess) return NotFound(new { error = evento.Error });
-        if (evento.Value!.UsuarioCreadorId != usuarioId) return Forbid();
+        if (evento.Value == null) return NotFound(new { error = "Evento no encontrado" });
+        if (evento.Value.UsuarioCreadorId != usuarioId) return Forbid();
 
         var result = await _compraService.GetByEventoAsync(eventoId, fechaDesde, fechaHasta, estado, page, pageSize);
 
         if (format?.ToLower() == "csv")
         {
-            var csv = GenerarCsvTransacciones(result.Items);
+            var csv = GenerarCsvTransacciones(result);
             return File(Encoding.UTF8.GetBytes(csv), "text/csv", $"transacciones-evento-{eventoId}-{DateTime.UtcNow:yyyyMMdd}.csv");
         }
 
@@ -64,10 +68,13 @@ public class ReportesController : ControllerBase
 
         var usuarioId = Guid.Parse(User.FindFirst("sub")!.Value);
         var evento = await _eventoService.GetByIdAsync(eventoId);
+
         if (!evento.IsSuccess) return NotFound(new { error = evento.Error });
-        if (evento.Value!.UsuarioCreadorId != usuarioId) return Forbid();
+        if (evento.Value == null) return NotFound(new { error = "Evento no encontrado" });
+        if (evento.Value.UsuarioCreadorId != usuarioId) return Forbid();
 
         var sectores = evento.Value.Sectores;
+
         var stats = new
         {
             TotalVendidas = sectores.Sum(s => s.EntradasVendidas),
@@ -109,10 +116,13 @@ public class ReportesController : ControllerBase
 
         var usuarioId = Guid.Parse(User.FindFirst("sub")!.Value);
         var evento = await _eventoService.GetByIdAsync(eventoId);
+
         if (!evento.IsSuccess) return NotFound(new { error = evento.Error });
-        if (evento.Value!.UsuarioCreadorId != usuarioId) return Forbid();
+        if (evento.Value == null) return NotFound(new { error = "Evento no encontrado" });
+        if (evento.Value.UsuarioCreadorId != usuarioId) return Forbid();
 
         var sectores = evento.Value.Sectores;
+
         var ocupacion = sectores.Select(s => new
         {
             s.Id,
@@ -147,7 +157,8 @@ public class ReportesController : ControllerBase
         if (fechaDesde.HasValue && fechaHasta.HasValue && fechaDesde > fechaHasta)
             return "La fecha 'desde' no puede ser posterior a la fecha 'hasta'";
 
-        if (!string.IsNullOrWhiteSpace(estado) && !EstadosCompraValidos.Contains(estado, StringComparer.OrdinalIgnoreCase))
+        if (!string.IsNullOrWhiteSpace(estado) &&
+            !EstadosCompraValidos.Contains(estado, StringComparer.OrdinalIgnoreCase))
             return $"El estado debe ser uno de: {string.Join(", ", EstadosCompraValidos)}";
 
         return ValidarFormato(format);
@@ -155,8 +166,10 @@ public class ReportesController : ControllerBase
 
     private static string? ValidarFormato(string? format)
     {
-        if (!string.IsNullOrWhiteSpace(format) && !FormatosValidos.Contains(format.ToLower()))
+        if (!string.IsNullOrWhiteSpace(format) &&
+            !FormatosValidos.Contains(format.ToLower()))
             return $"El formato debe ser uno de: {string.Join(", ", FormatosValidos)}";
+
         return null;
     }
 
@@ -164,10 +177,12 @@ public class ReportesController : ControllerBase
     {
         var sb = new StringBuilder();
         sb.AppendLine("Id,UsuarioId,EventoId,SectorId,Cantidad,Total,Estado,FechaCreacion,FechaPago");
+
         foreach (var c in result.Items)
         {
             sb.AppendLine($"{c.Id},{c.UsuarioId},{c.EventoId},{c.SectorId},{c.Cantidad},{c.Total},{c.Estado},{c.FechaCreacion:yyyy-MM-dd HH:mm},{c.FechaPago?.ToString("yyyy-MM-dd HH:mm") ?? ""}");
         }
+
         return sb.ToString();
     }
 
@@ -175,11 +190,12 @@ public class ReportesController : ControllerBase
     {
         var sb = new StringBuilder();
         sb.AppendLine("SectorId,Nombre,Capacidad,EntradasVendidas,EntradasDisponibles,PorcentajeOcupacion,PrecioActual,Ingresos");
+
         foreach (var s in sectores)
         {
             sb.AppendLine($"{s.Id},{s.Nombre},{s.Capacidad},{s.EntradasVendidas},{s.EntradasDisponibles},{s.PorcentajeOcupacion:F2},{s.PrecioActual},{s.EntradasVendidas * s.PrecioActual}");
         }
-        sb.AppendLine($",TOTAL,,{sectores.Sum(s => s.EntradasVendidas)},{sectores.Sum(s => s.EntradasDisponibles)},,{sectores.Sum(s => s.EntradasVendidas * s.PrecioActual)}");
+
         return sb.ToString();
     }
 
@@ -187,10 +203,12 @@ public class ReportesController : ControllerBase
     {
         var sb = new StringBuilder();
         sb.AppendLine("SectorId,Nombre,Capacidad,EntradasVendidas,EntradasDisponibles,PorcentajeOcupacion,PrecioBase,PrecioActual,PrecioIncrementado");
+
         foreach (var s in sectores)
         {
             sb.AppendLine($"{s.Id},{s.Nombre},{s.Capacidad},{s.EntradasVendidas},{s.EntradasDisponibles},{s.PorcentajeOcupacion:F2},{s.PrecioBase},{s.PrecioActual},{s.PrecioActual > s.PrecioBase}");
         }
+
         return sb.ToString();
     }
 }

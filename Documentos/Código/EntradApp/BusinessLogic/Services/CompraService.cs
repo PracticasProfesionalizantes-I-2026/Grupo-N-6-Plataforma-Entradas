@@ -1,3 +1,4 @@
+
 using EntradApp.BusinessLogic.Interfaces;
 using EntradApp.DataAccess.Entities;
 using EntradApp.DataAccess.Repositories.Interfaces;
@@ -33,39 +34,59 @@ public class CompraService : ICompraService
         _reservaTemporalService = reservaTemporalService;
     }
 
-    public async Task<Result<CompraResponseDTO>> CrearCompraAsync(Guid usuarioId, CompraCreateDTO dto)
+    public async Task<Result<CompraResponseDTO>> CrearCompraAsync(
+        Guid usuarioId, CompraCreateDTO dto)
     {
         var evento = await _eventoRepository.GetByIdAsync(dto.EventoId);
-        if (evento == null) return Result.Failure<CompraResponseDTO>("Evento no encontrado");
-        if (evento.Estado != EstadoEvento.Aprobado) return Result.Failure<CompraResponseDTO>("El evento no está disponible para compra");
+
+        if (evento == null)
+            return Result.Failure<CompraResponseDTO>("Evento no encontrado");
+
+        if (evento.Estado != EstadoEvento.Aprobado)
+            return Result.Failure<CompraResponseDTO>(
+                "El evento no está disponible para compra");
 
         var sector = await _sectorRepository.GetByIdAsync(dto.SectorId);
-        if (sector == null || sector.EventoId != dto.EventoId) return Result.Failure<CompraResponseDTO>("Sector no disponible");
-        if (sector.EsBorrado) return Result.Failure<CompraResponseDTO>("Sector no disponible");
+
+        if (sector == null || sector.EventoId != dto.EventoId)
+            return Result.Failure<CompraResponseDTO>("Sector no disponible");
+
+        if (sector.EsBorrado)
+            return Result.Failure<CompraResponseDTO>("Sector no disponible");
 
         if (dto.Dnis.Count != dto.Cantidad)
-            return Result.Failure<CompraResponseDTO>("Debe proporcionar un DNI por cada entrada");
+            return Result.Failure<CompraResponseDTO>(
+                "Debe proporcionar un DNI por cada entrada");
 
-        var dispResult = await _validacionCompraService.ValidarDisponibilidadAsync(dto.SectorId, dto.Cantidad);
+        var dispResult = await _validacionCompraService.ValidarDisponibilidadAsync(
+            dto.SectorId, dto.Cantidad);
+
         if (!dispResult.IsSuccess)
             return Result.Failure<CompraResponseDTO>(dispResult.Error!);
 
-        var limiteResult = await _validacionCompraService.ValidarLimiteMaximoAsync(usuarioId, dto.EventoId, dto.Cantidad);
+        var limiteResult = await _validacionCompraService.ValidarLimiteMaximoAsync(
+            usuarioId, dto.EventoId, dto.Cantidad);
+
         if (!limiteResult.IsSuccess)
             return Result.Failure<CompraResponseDTO>(limiteResult.Error!);
 
-        var dnisResult = await _validacionCompraService.ValidarDnisDuplicadosAsync(dto.EventoId, dto.Dnis);
+        var dnisResult = await _validacionCompraService.ValidarDnisDuplicadosAsync(
+            dto.EventoId, dto.Dnis);
+
         if (!dnisResult.IsSuccess)
             return Result.Failure<CompraResponseDTO>(dnisResult.Error!);
 
+        var compraId = Guid.NewGuid();
+
         var reservaResult = await _reservaTemporalService.CrearReservaAsync(
-            Guid.NewGuid(), dto.SectorId, dto.Cantidad, 10);
+            compraId, dto.SectorId, dto.Cantidad, 10);
+
         if (!reservaResult.IsSuccess)
             return Result.Failure<CompraResponseDTO>(reservaResult.Error!);
 
         var compra = new Compra
         {
-            Id = Guid.NewGuid(),
+            Id = compraId,
             UsuarioId = usuarioId,
             EventoId = dto.EventoId,
             SectorId = dto.SectorId,
@@ -77,7 +98,7 @@ public class CompraService : ICompraService
 
         await _compraRepository.CreateAsync(compra);
 
-        var entradas = dto.Dnis.Select((dni, index) => new Entrada
+        var entradas = dto.Dnis.Select(dni => new Entrada
         {
             Id = Guid.NewGuid(),
             CompraId = compra.Id,
@@ -89,43 +110,71 @@ public class CompraService : ICompraService
         }).ToList();
 
         await _entradaRepository.CreateRangeAsync(entradas);
-        await _sectorRepository.IncrementarVendidasAsync(dto.SectorId, dto.Cantidad);
-        await _sectorRepository.DecrementarReservadasAsync(dto.SectorId, dto.Cantidad);
 
-        // Cambiar estado a Aprobado (simulando pago en efectivo inmediato para desarrollo)
-        compra.Estado = EstadoCompra.Aprobado;
-        compra.FechaPago = DateTime.UtcNow;
-        await _compraRepository.UpdateEstadoAsync(compra.Id, EstadoCompra.Aprobado);
-
-        return Result.Success(MapToResponseDTO(compra, entradas, sector, evento));
+        return Result.Success(
+            MapToResponseDTO(compra, entradas, sector, evento));
     }
 
-    public async Task<Result<CompraResponseDTO>> ConfirmarPagoAsync(Guid usuarioId, Guid compraId)
+    public async Task<Result<CompraResponseDTO>> ConfirmarPagoAsync(
+        Guid usuarioId, Guid compraId)
     {
         var compra = await _compraRepository.GetByIdAsync(compraId);
-        if (compra == null) return Result.Failure<CompraResponseDTO>("Compra no encontrada");
-        if (compra.UsuarioId != usuarioId) return Result.Failure<CompraResponseDTO>("No tiene permisos para confirmar esta compra");
-        if (compra.Estado != EstadoCompra.PendientePago) return Result.Failure<CompraResponseDTO>("La compra no está pendiente de pago");
 
-        await _compraRepository.UpdateEstadoAsync(compraId, EstadoCompra.Aprobado);
-        var updated = await _compraRepository.GetByIdAsync(compraId);
-        return Result.Success(MapToResponseDTO(updated!, updated.Entradas, updated.Sector!, updated.Evento!));
+        if (compra == null)
+            return Result.Failure<CompraResponseDTO>("Compra no encontrada");
+
+        if (compra.UsuarioId != usuarioId)
+            return Result.Failure<CompraResponseDTO>(
+                "No tiene permisos para confirmar esta compra");
+
+        if (compra.Estado != EstadoCompra.PendientePago)
+            return Result.Failure<CompraResponseDTO>(
+                "La compra no está pendiente de pago");
+
+        var reservaResult = await _reservaTemporalService.ConfirmarReservaAsync(
+            compraId);
+
+        if (!reservaResult.IsSuccess)
+            return Result.Failure<CompraResponseDTO>(reservaResult.Error!);
+
+        var estadoResult = await _compraRepository.UpdateEstadoAsync(
+            compraId, EstadoCompra.Aprobado);
+
+        if (!estadoResult.IsSuccess)
+            return Result.Failure<CompraResponseDTO>(estadoResult.Error!);
+
+        compra.Estado = EstadoCompra.Aprobado;
+        compra.FechaPago = DateTime.UtcNow;
+
+        return Result.Success(
+            MapToResponseDTO(
+                compra, compra.Entradas, compra.Sector!, compra.Evento!));
     }
 
     public async Task<Result> CancelarCompraAsync(Guid usuarioId, Guid compraId)
     {
         var compra = await _compraRepository.GetByIdAsync(compraId);
-        if (compra == null) return Result.Failure("Compra no encontrada");
-        if (compra.UsuarioId != usuarioId) return Result.Failure("No tiene permisos para cancelar esta compra");
-        if (compra.Estado != EstadoCompra.PendientePago) return Result.Failure("Solo se pueden cancelar compras pendientes de pago");
+
+        if (compra == null)
+            return Result.Failure("Compra no encontrada");
+
+        if (compra.UsuarioId != usuarioId)
+            return Result.Failure(
+                "No tiene permisos para cancelar esta compra");
+
+        if (compra.Estado != EstadoCompra.PendientePago)
+            return Result.Failure(
+                "Solo se pueden cancelar compras pendientes de pago");
 
         await _reservaTemporalService.LiberarReservaAsync(compraId);
-        await _sectorRepository.DecrementarReservadasAsync(compra.SectorId, compra.Cantidad);
-        await _compraRepository.UpdateEstadoAsync(compraId, EstadoCompra.Cancelada);
+
+        await _compraRepository.UpdateEstadoAsync(
+            compraId, EstadoCompra.Cancelada);
 
         foreach (var entrada in compra.Entradas)
         {
-            await _entradaRepository.UpdateEstadoAsync(entrada.Id, EstadoEntrada.Cancelada);
+            await _entradaRepository.UpdateEstadoAsync(
+                entrada.Id, EstadoEntrada.Cancelada);
         }
 
         return Result.Success();
@@ -134,71 +183,117 @@ public class CompraService : ICompraService
     public async Task<Result<CompraResponseDTO>> GetByIdAsync(Guid compraId)
     {
         var compra = await _compraRepository.GetByIdAsync(compraId);
-        if (compra == null) return Result.Failure<CompraResponseDTO>("Compra no encontrada");
-        return Result.Success(MapToResponseDTO(compra, compra.Entradas, compra.Sector!, compra.Evento!));
+
+        if (compra == null)
+            return Result.Failure<CompraResponseDTO>("Compra no encontrada");
+
+        return Result.Success(
+            MapToResponseDTO(
+                compra, compra.Entradas, compra.Sector!, compra.Evento!));
     }
 
-    public async Task<PagedResult<CompraResponseDTO>> GetByUsuarioAsync(Guid usuarioId, int page, int pageSize)
+    public async Task<PagedResult<CompraResponseDTO>> GetByUsuarioAsync(
+        Guid usuarioId, int page, int pageSize)
     {
-        var result = await _compraRepository.GetByUsuarioAsync(usuarioId, page, pageSize);
-        var items = result.Items.Select(c => MapToResponseDTO(c, c.Entradas, c.Sector!, c.Evento!)).ToList();
-        return new PagedResult<CompraResponseDTO>(items, result.PageNumber, result.PageSize, result.TotalCount);
+        var result = await _compraRepository.GetByUsuarioAsync(
+            usuarioId, page, pageSize);
+
+        var items = result.Items
+            .Select(c => MapToResponseDTO(
+                c, c.Entradas, c.Sector!, c.Evento!))
+            .ToList();
+
+        return new PagedResult<CompraResponseDTO>(
+            items, result.PageNumber, result.PageSize, result.TotalCount);
     }
 
-    private static readonly string[] EstadosCompraValidos = ["PendientePago", "Aprobado", "Cancelada"];
+    private static readonly string[] EstadosCompraValidos =
+        ["PendientePago", "Aprobado", "Cancelada"];
+
     private const int MaxPageSize = 100;
 
-    public async Task<PagedResult<CompraResponseDTO>> GetByEventoAsync(Guid eventoId, DateTime? fechaDesde, DateTime? fechaHasta, string? estado, int page, int pageSize)
+    public async Task<PagedResult<CompraResponseDTO>> GetByEventoAsync(
+        Guid eventoId,
+        DateTime? fechaDesde,
+        DateTime? fechaHasta,
+        string? estado,
+        int page,
+        int pageSize)
     {
-        var errorValidacion = ValidarParametrosReporte(page, pageSize, fechaDesde, fechaHasta, estado);
-        if (errorValidacion != null) return new PagedResult<CompraResponseDTO>([], 1, pageSize, 0);
+        var errorValidacion = ValidarParametrosReporte(
+            page, pageSize, fechaDesde, fechaHasta, estado);
 
-        var result = await _compraRepository.GetByEventoAsync(eventoId, fechaDesde, fechaHasta, estado, page, pageSize);
-        var items = result.Items.Select(c => MapToResponseDTO(c, c.Entradas, c.Sector!, c.Evento!)).ToList();
-        return new PagedResult<CompraResponseDTO>(items, result.PageNumber, result.PageSize, result.TotalCount);
+        if (errorValidacion != null)
+            return new PagedResult<CompraResponseDTO>([], 1, pageSize, 0);
+
+        var result = await _compraRepository.GetByEventoAsync(
+            eventoId, fechaDesde, fechaHasta, estado, page, pageSize);
+
+        var items = result.Items
+            .Select(c => MapToResponseDTO(
+                c, c.Entradas, c.Sector!, c.Evento!))
+            .ToList();
+
+        return new PagedResult<CompraResponseDTO>(
+            items, result.PageNumber, result.PageSize, result.TotalCount);
     }
 
     private static string? ValidarParametrosReporte(
-        int page, int pageSize,
-        DateTime? fechaDesde, DateTime? fechaHasta,
+        int page,
+        int pageSize,
+        DateTime? fechaDesde,
+        DateTime? fechaHasta,
         string? estado)
     {
-        if (page < 1) return "El número de página debe ser mayor a 0";
-        if (pageSize < 1) return "El tamaño de página debe ser mayor a 0";
-        if (pageSize > MaxPageSize) return $"El tamaño de página no puede exceder {MaxPageSize}";
+        if (page < 1)
+            return "El número de página debe ser mayor a 0";
 
-        if (fechaDesde.HasValue && fechaHasta.HasValue && fechaDesde > fechaHasta)
+        if (pageSize < 1)
+            return "El tamaño de página debe ser mayor a 0";
+
+        if (pageSize > MaxPageSize)
+            return $"El tamaño de página no puede exceder {MaxPageSize}";
+
+        if (fechaDesde.HasValue && fechaHasta.HasValue
+            && fechaDesde > fechaHasta)
             return "La fecha 'desde' no puede ser posterior a la fecha 'hasta'";
 
-        if (!string.IsNullOrWhiteSpace(estado) && !EstadosCompraValidos.Contains(estado, StringComparer.OrdinalIgnoreCase))
+        if (!string.IsNullOrWhiteSpace(estado)
+            && !EstadosCompraValidos.Contains(
+                estado, StringComparer.OrdinalIgnoreCase))
+        {
             return $"El estado debe ser uno de: {string.Join(", ", EstadosCompraValidos)}";
+        }
 
         return null;
     }
 
-    private static CompraResponseDTO MapToResponseDTO(Compra c, IEnumerable<Entrada> entradas, Sector sector, Evento evento) => new()
-    {
-        Id = c.Id,
-        UsuarioId = c.UsuarioId,
-        EventoId = c.EventoId,
-        EventoNombre = evento.Nombre,
-        SectorId = c.SectorId,
-        SectorNombre = sector.Nombre,
-        Cantidad = c.Cantidad,
-        Total = c.Total,
-        Estado = c.Estado,
-        FechaCreacion = c.FechaCreacion,
-        FechaPago = c.FechaPago,
-        Entradas = entradas.Select(e => new EntradaEnComprobanteDTO
+    private static CompraResponseDTO MapToResponseDTO(
+        Compra c, IEnumerable<Entrada> entradas, Sector sector, Evento evento)
+        => new()
         {
-            Id = e.Id,
-            Dni = e.Dni,
-            CodigoUnico = e.CodigoUnico,
-            Sector = sector.Nombre,
-            Precio = sector.PrecioActual
-        }).ToList(),
-        CodigoQR = $"QR-{c.Id:N}"
-    };
+            Id = c.Id,
+            UsuarioId = c.UsuarioId,
+            EventoId = c.EventoId,
+            EventoNombre = evento.Nombre,
+            SectorId = c.SectorId,
+            SectorNombre = sector.Nombre,
+            Cantidad = c.Cantidad,
+            Total = c.Total,
+            Estado = c.Estado,
+            FechaCreacion = c.FechaCreacion,
+            FechaPago = c.FechaPago,
+            Entradas = entradas.Select(e => new EntradaEnComprobanteDTO
+            {
+                Id = e.Id,
+                Dni = e.Dni,
+                CodigoUnico = e.CodigoUnico,
+                Sector = sector.Nombre,
+                Precio = sector.PrecioActual
+            }).ToList(),
+            CodigoQR = $"QR-{c.Id:N}"
+        };
 
-    private static string GenerarCodigoUnico() => $"EVT-{Guid.NewGuid().ToString("N")[..8].ToUpper()}";
+    private static string GenerarCodigoUnico()
+        => $"EVT-{Guid.NewGuid().ToString("N")[..8].ToUpper()}";
 }

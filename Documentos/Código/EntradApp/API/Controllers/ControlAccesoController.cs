@@ -2,6 +2,7 @@ using EntradApp.BusinessLogic.Interfaces;
 using EntradApp.Shared.DTOs.Entrada;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using EntradApp.Shared.Enums;
 using System.Text.RegularExpressions;
 
 namespace EntradApp.API.Controllers;

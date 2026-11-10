@@ -41,10 +41,10 @@ public class CompraRepository : ICompraRepository
 
     public async Task<PagedResult<Compra>> GetByEventoAsync(Guid eventoId, DateTime? fechaDesde, DateTime? fechaHasta, string? estado, int page, int pageSize, CancellationToken ct = default)
     {
-        var query = _context.Compras
-            .AsNoTracking()
-            .Where(c => c.EventoId == eventoId)
-            .OrderByDescending(c => c.FechaCreacion);
+        IQueryable<Compra> query = _context.Compras
+        .AsNoTracking()
+        .Where(c => c.EventoId == eventoId)
+        .OrderByDescending(c => c.FechaCreacion);
 
         if (fechaDesde.HasValue)
             query = query.Where(c => c.FechaCreacion >= fechaDesde.Value);

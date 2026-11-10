@@ -164,3 +164,4 @@ C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código
 C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\API\obj\Debug\net10.0\EntradApp.API.pdb
 C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\API\obj\Debug\net10.0\EntradApp.API.genruntimeconfig.cache
 C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\API\obj\Debug\net10.0\ref\EntradApp.API.dll
+C:\Users\larag\Documents\GitHub\Grupo-N-6-Plataforma-Entradas\Documentos\Código\EntradApp\API\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
