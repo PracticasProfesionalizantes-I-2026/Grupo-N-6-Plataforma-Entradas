@@ -1,3 +1,4 @@
+
 using EntradApp.API.Filters;
 using EntradApp.API.Middleware;
 using EntradApp.BusinessLogic.Interfaces;
@@ -12,6 +13,22 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// JWT Configuration
+var jwtKey = builder.Configuration["Jwt:Key"];
+
+if (string.IsNullOrWhiteSpace(jwtKey))
+    throw new InvalidOperationException(
+        "La clave JWT no está configurada. Defina Jwt:Key mediante User Secrets o una variable de entorno.");
+
+var jwtKeyBytes = Encoding.UTF8.GetBytes(jwtKey);
+
+if (jwtKeyBytes.Length < 32)
+    throw new InvalidOperationException(
+        "La clave JWT debe tener al menos 32 bytes (256 bits).");
+
+var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "EntradApp";
+var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "EntradAppUsers";
+
 // Add services
 builder.Services.AddControllers(options =>
 {
@@ -24,7 +41,8 @@ builder.Services.AddOpenApi();
 
 // DbContext
 builder.Services.AddDbContext<EntradAppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=entradapp.db"));
+    options.UseSqlite(
+        builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=entradapp.db"));
 
 // Repositories
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
@@ -49,10 +67,6 @@ builder.Services.AddScoped<IReservaTemporalService, ReservaTemporalService>();
 builder.Services.AddScoped<IValidacionCompraService, ValidacionCompraService>();
 
 // JWT Authentication
-var jwtKey = builder.Configuration["Jwt:Key"] ?? "SuperSecretKeyForDevelopmentOnlyChangeInProduction12345!";
-var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "EntradApp";
-var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "EntradAppUsers";
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -64,7 +78,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = jwtIssuer,
             ValidAudience = jwtAudience,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+            IssuerSigningKey = new SymmetricSecurityKey(jwtKeyBytes),
             ClockSkew = TimeSpan.Zero
         };
     });

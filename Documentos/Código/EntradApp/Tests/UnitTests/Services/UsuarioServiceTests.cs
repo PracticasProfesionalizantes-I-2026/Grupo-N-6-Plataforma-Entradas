@@ -21,8 +21,8 @@ public class UsuarioServiceTests
     {
         _usuarioRepoMock = new Mock<IUsuarioRepository>();
         _configMock = new Mock<IConfiguration>();
-        _configMock.Setup(c => c["Jwt:Key"]).Returns("SuperSecretKeyForDevelopmentOnlyChangeInProduction12345!");
-        
+        _configMock.Setup(c => c["Jwt:Key"]).Returns("ClaveFicticiaParaTestsUnitarios123456789!");
+
         _service = new UsuarioService(_usuarioRepoMock.Object, _configMock.Object);
     }
 

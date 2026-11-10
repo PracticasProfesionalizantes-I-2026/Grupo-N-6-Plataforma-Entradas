@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("de73ef22-6b4a-4289-8720-75fe9d310b67")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("EntradApp.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d810843f59454c4ce0b84559b016b41461b7d0eb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9afb28c78662debdf03cdbb6d716df8b5d0413b6")]
 [assembly: System.Reflection.AssemblyProductAttribute("EntradApp.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EntradApp.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

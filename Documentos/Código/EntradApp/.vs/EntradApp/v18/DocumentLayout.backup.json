@@ -3,6 +3,46 @@
   "WorkspaceRootPath": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{55555555-5555-5555-5555-555555555555}|Tests\\UnitTests\\EntradApp.Tests.Unit.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\tests\\unittests\\services\\usuarioservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55555555-5555-5555-5555-555555555555}|Tests\\UnitTests\\EntradApp.Tests.Unit.csproj|solutionrelative:tests\\unittests\\services\\usuarioservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33333333-3333-3333-3333-333333333333}|BusinessLogic\\EntradApp.BusinessLogic.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\businesslogic\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33333333-3333-3333-3333-333333333333}|BusinessLogic\\EntradApp.BusinessLogic.csproj|solutionrelative:businesslogic\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{66666666-6666-6666-6666-666666666666}|Tests\\IntegrationTests\\EntradApp.Tests.Integration.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\tests\\integrationtests\\testbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66666666-6666-6666-6666-666666666666}|Tests\\IntegrationTests\\EntradApp.Tests.Integration.csproj|solutionrelative:tests\\integrationtests\\testbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{66666666-6666-6666-6666-666666666666}|Tests\\IntegrationTests\\EntradApp.Tests.Integration.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\tests\\integrationtests\\controllers\\eventoscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66666666-6666-6666-6666-666666666666}|Tests\\IntegrationTests\\EntradApp.Tests.Integration.csproj|solutionrelative:tests\\integrationtests\\controllers\\eventoscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{66666666-6666-6666-6666-666666666666}|Tests\\IntegrationTests\\EntradApp.Tests.Integration.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\tests\\integrationtests\\controllers\\comprascontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66666666-6666-6666-6666-666666666666}|Tests\\IntegrationTests\\EntradApp.Tests.Integration.csproj|solutionrelative:tests\\integrationtests\\controllers\\comprascontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{66666666-6666-6666-6666-666666666666}|Tests\\IntegrationTests\\EntradApp.Tests.Integration.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\tests\\integrationtests\\controllers\\admincontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66666666-6666-6666-6666-666666666666}|Tests\\IntegrationTests\\EntradApp.Tests.Integration.csproj|solutionrelative:tests\\integrationtests\\controllers\\admincontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\api\\controllers\\reportescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|solutionrelative:api\\controllers\\reportescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33333333-3333-3333-3333-333333333333}|BusinessLogic\\EntradApp.BusinessLogic.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\businesslogic\\services\\entradaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33333333-3333-3333-3333-333333333333}|BusinessLogic\\EntradApp.BusinessLogic.csproj|solutionrelative:businesslogic\\services\\entradaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{55555555-5555-5555-5555-555555555555}|Tests\\UnitTests\\EntradApp.Tests.Unit.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\tests\\unittests\\services\\compraservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{55555555-5555-5555-5555-555555555555}|Tests\\UnitTests\\EntradApp.Tests.Unit.csproj|solutionrelative:tests\\unittests\\services\\compraservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -31,16 +71,8 @@
       "RelativeMoniker": "D:0:0:{22222222-2222-2222-2222-222222222222}|DataAccess\\EntradApp.DataAccess.csproj|solutionrelative:dataaccess\\repositories\\implementations\\comprarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\api\\middleware\\backgroundjobs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|solutionrelative:api\\middleware\\backgroundjobs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\api\\controllers\\reportescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|solutionrelative:api\\controllers\\reportescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\api\\controllers\\controlaccesocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -57,10 +89,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\api\\controllers\\devolucionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{44444444-4444-4444-4444-444444444444}|API\\EntradApp.API.csproj|solutionrelative:api\\controllers\\devolucionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{33333333-3333-3333-3333-333333333333}|BusinessLogic\\EntradApp.BusinessLogic.csproj|c:\\users\\larag\\documents\\github\\grupo-n-6-plataforma-entradas\\documentos\\c\u00F3digo\\entradapp\\businesslogic\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{33333333-3333-3333-3333-333333333333}|BusinessLogic\\EntradApp.BusinessLogic.csproj|solutionrelative:businesslogic\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -70,62 +98,122 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SectorRepository.cs",
-              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\DataAccess\\Repositories\\Implementations\\SectorRepository.cs",
-              "RelativeDocumentMoniker": "DataAccess\\Repositories\\Implementations\\SectorRepository.cs",
-              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\DataAccess\\Repositories\\Implementations\\SectorRepository.cs",
-              "RelativeToolTip": "DataAccess\\Repositories\\Implementations\\SectorRepository.cs",
-              "ViewState": "AgIAAGAAAAAAAAAAAADwv4YAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "UsuarioServiceTests.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\Tests\\UnitTests\\Services\\UsuarioServiceTests.cs",
+              "RelativeDocumentMoniker": "Tests\\UnitTests\\Services\\UsuarioServiceTests.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\Tests\\UnitTests\\Services\\UsuarioServiceTests.cs",
+              "RelativeToolTip": "Tests\\UnitTests\\Services\\UsuarioServiceTests.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAMwCYAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-10T15:25:30.308Z",
+              "WhenOpened": "2026-11-10T15:49:34.35Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ReservaTemporalService.cs",
-              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\ReservaTemporalService.cs",
-              "RelativeDocumentMoniker": "BusinessLogic\\Services\\ReservaTemporalService.cs",
-              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\ReservaTemporalService.cs",
-              "RelativeToolTip": "BusinessLogic\\Services\\ReservaTemporalService.cs",
-              "ViewState": "AgIAAHoAAAAAAAAAAADwv50AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-10T14:51:54.343Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "CompraRepository.cs",
-              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\DataAccess\\Repositories\\Implementations\\CompraRepository.cs",
-              "RelativeDocumentMoniker": "DataAccess\\Repositories\\Implementations\\CompraRepository.cs",
-              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\DataAccess\\Repositories\\Implementations\\CompraRepository.cs",
-              "RelativeToolTip": "DataAccess\\Repositories\\Implementations\\CompraRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-10T14:22:25.184Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "CompraService.cs",
-              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\CompraService.cs",
-              "RelativeDocumentMoniker": "BusinessLogic\\Services\\CompraService.cs",
-              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\CompraService.cs",
-              "RelativeToolTip": "BusinessLogic\\Services\\CompraService.cs",
-              "ViewState": "AgIAADMBAAAAAAAAAADwv1YBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-10T14:11:01.87Z",
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\appsettings.json",
+              "RelativeDocumentMoniker": "API\\appsettings.json",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\appsettings.json",
+              "RelativeToolTip": "API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-11-10T15:49:10.764Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "TestBase.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\Tests\\IntegrationTests\\TestBase.cs",
+              "RelativeDocumentMoniker": "Tests\\IntegrationTests\\TestBase.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\Tests\\IntegrationTests\\TestBase.cs",
+              "RelativeToolTip": "Tests\\IntegrationTests\\TestBase.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-10T15:37:55.46Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "EventosControllerTests.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\Tests\\IntegrationTests\\Controllers\\EventosControllerTests.cs",
+              "RelativeDocumentMoniker": "Tests\\IntegrationTests\\Controllers\\EventosControllerTests.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\Tests\\IntegrationTests\\Controllers\\EventosControllerTests.cs",
+              "RelativeToolTip": "Tests\\IntegrationTests\\Controllers\\EventosControllerTests.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAcwEwAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-10T15:37:50.946Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ComprasControllerTests.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\Tests\\IntegrationTests\\Controllers\\ComprasControllerTests.cs",
+              "RelativeDocumentMoniker": "Tests\\IntegrationTests\\Controllers\\ComprasControllerTests.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\Tests\\IntegrationTests\\Controllers\\ComprasControllerTests.cs",
+              "RelativeToolTip": "Tests\\IntegrationTests\\Controllers\\ComprasControllerTests.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAiwEMAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-10T15:37:42.551Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AdminControllerTests.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\Tests\\IntegrationTests\\Controllers\\AdminControllerTests.cs",
+              "RelativeDocumentMoniker": "Tests\\IntegrationTests\\Controllers\\AdminControllerTests.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\Tests\\IntegrationTests\\Controllers\\AdminControllerTests.cs",
+              "RelativeToolTip": "Tests\\IntegrationTests\\Controllers\\AdminControllerTests.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAA4wGwAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-10T15:37:17.375Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "EntradaService.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\EntradaService.cs",
+              "RelativeDocumentMoniker": "BusinessLogic\\Services\\EntradaService.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\EntradaService.cs",
+              "RelativeToolTip": "BusinessLogic\\Services\\EntradaService.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAiwBYAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-10T15:36:34.193Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UsuarioService.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\UsuarioService.cs",
+              "RelativeDocumentMoniker": "BusinessLogic\\Services\\UsuarioService.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\UsuarioService.cs",
+              "RelativeToolTip": "BusinessLogic\\Services\\UsuarioService.cs",
+              "ViewState": "AgIAAJ0AAAAAAAAAAADwv8AAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-29T22:11:19.029Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Program.cs",
+              "RelativeDocumentMoniker": "API\\Program.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Program.cs",
+              "RelativeToolTip": "API\\Program.cs",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAUwHIAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-10T15:02:05.442Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "IReservaTemporalService.cs",
               "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Interfaces\\IReservaTemporalService.cs",
               "RelativeDocumentMoniker": "BusinessLogic\\Interfaces\\IReservaTemporalService.cs",
@@ -137,20 +225,79 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 11,
+              "Title": "CompraService.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\CompraService.cs",
+              "RelativeDocumentMoniker": "BusinessLogic\\Services\\CompraService.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\CompraService.cs",
+              "RelativeToolTip": "BusinessLogic\\Services\\CompraService.cs",
+              "ViewState": "AgIAADMBAAAAAAAAAADwv1YBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-10T14:11:01.87Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "CompraServiceTests.cs",
               "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\Tests\\UnitTests\\Services\\CompraServiceTests.cs",
               "RelativeDocumentMoniker": "Tests\\UnitTests\\Services\\CompraServiceTests.cs",
               "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\Tests\\UnitTests\\Services\\CompraServiceTests.cs",
               "RelativeToolTip": "Tests\\UnitTests\\Services\\CompraServiceTests.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAA/wCUAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAABoAAAAAAAAAAAAswCUAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-10T14:12:33.082Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-10T14:12:33.082Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 13,
+              "Title": "SectorRepository.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\DataAccess\\Repositories\\Implementations\\SectorRepository.cs",
+              "RelativeDocumentMoniker": "DataAccess\\Repositories\\Implementations\\SectorRepository.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\DataAccess\\Repositories\\Implementations\\SectorRepository.cs",
+              "RelativeToolTip": "DataAccess\\Repositories\\Implementations\\SectorRepository.cs",
+              "ViewState": "AgIAAGAAAAAAAAAAAADwv4YAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-10T15:25:30.308Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ReportesController.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Controllers\\ReportesController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ReportesController.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Controllers\\ReportesController.cs",
+              "RelativeToolTip": "API\\Controllers\\ReportesController.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAuwBMAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-20T22:28:13.609Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "CompraRepository.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\DataAccess\\Repositories\\Implementations\\CompraRepository.cs",
+              "RelativeDocumentMoniker": "DataAccess\\Repositories\\Implementations\\CompraRepository.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\DataAccess\\Repositories\\Implementations\\CompraRepository.cs",
+              "RelativeToolTip": "DataAccess\\Repositories\\Implementations\\CompraRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-10T14:22:25.184Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ReservaTemporalService.cs",
+              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\ReservaTemporalService.cs",
+              "RelativeDocumentMoniker": "BusinessLogic\\Services\\ReservaTemporalService.cs",
+              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\ReservaTemporalService.cs",
+              "RelativeToolTip": "BusinessLogic\\Services\\ReservaTemporalService.cs",
+              "ViewState": "AgIAAHoAAAAAAAAAAADwv50AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-10T14:51:54.343Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "IReservaTemporalRepository.cs",
               "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\DataAccess\\Repositories\\Interfaces\\IReservaTemporalRepository.cs",
               "RelativeDocumentMoniker": "DataAccess\\Repositories\\Interfaces\\IReservaTemporalRepository.cs",
@@ -162,19 +309,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Program.cs",
-              "RelativeDocumentMoniker": "API\\Program.cs",
-              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Program.cs",
-              "RelativeToolTip": "API\\Program.cs",
-              "ViewState": "AgIAAEAAAAAAAAAAAAAAAE0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-10T15:02:05.442Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 17,
               "Title": "BackgroundJobs.cs",
               "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Middleware\\BackgroundJobs.cs",
               "RelativeDocumentMoniker": "API\\Middleware\\BackgroundJobs.cs",
@@ -186,7 +321,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 18,
               "Title": "ControlAccesoController.cs",
               "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Controllers\\ControlAccesoController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\ControlAccesoController.cs",
@@ -198,7 +333,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 19,
               "Title": "ICompraService.cs",
               "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Interfaces\\ICompraService.cs",
               "RelativeDocumentMoniker": "BusinessLogic\\Interfaces\\ICompraService.cs",
@@ -210,7 +345,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 20,
               "Title": "ComprasController.cs",
               "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Controllers\\ComprasController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\ComprasController.cs",
@@ -222,19 +357,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ReportesController.cs",
-              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Controllers\\ReportesController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\ReportesController.cs",
-              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Controllers\\ReportesController.cs",
-              "RelativeToolTip": "API\\Controllers\\ReportesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAANYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-20T22:28:13.609Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 21,
               "Title": "DevolucionesController.cs",
               "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\API\\Controllers\\DevolucionesController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\DevolucionesController.cs",
@@ -243,18 +366,6 @@
               "ViewState": "AgIAAA4AAAAAAAAAAAAqwBwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-29T22:43:23.08Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "UsuarioService.cs",
-              "DocumentMoniker": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\UsuarioService.cs",
-              "RelativeDocumentMoniker": "BusinessLogic\\Services\\UsuarioService.cs",
-              "ToolTip": "C:\\Users\\larag\\Documents\\GitHub\\Grupo-N-6-Plataforma-Entradas\\Documentos\\C\u00F3digo\\EntradApp\\BusinessLogic\\Services\\UsuarioService.cs",
-              "RelativeToolTip": "BusinessLogic\\Services\\UsuarioService.cs",
-              "ViewState": "AgIAAH4AAAAAAAAAAAAuwIoAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-29T22:11:19.029Z"
             }
           ]
         }
